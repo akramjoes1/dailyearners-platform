@@ -10,7 +10,7 @@ const admin = require('firebase-admin');
 // 2. Firebase Admin SDK Initialization
 // IMPORTANT: For LOCAL TESTING, we require the JSON file directly.
 // For Render deployment, we will use an environment variable (see Part 8 in previous instructions).
-const serviceAccount = require('./dailyearners-firebase-admin.json');
+const serviceAccount = JSON.parse(process.env.FIREBASE_ADMIN_CREDENTIALS);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
