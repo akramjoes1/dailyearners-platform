@@ -1,120 +1,81 @@
-// server.js
-
-// 1. Core Modules and Third-party Libraries (Declare once at the top)
 const express = require('express');
 const bodyParser = require('body-parser');
-const cors = require('cors'); // Ensure CORS is only imported once
 const admin = require('firebase-admin');
-const bcrypt = require('bcryptjs'); // For password hashing
+const bcrypt = require('bcrypt');
+const cors = require('cors'); // Import the cors middleware
 
-// 2. Firebase Admin SDK Initialization
-// Load Firebase credentials from environment variable (for Render deployment)
-// For local development, you must set the FIREBASE_ADMIN_CREDENTIALS env var locally,
-// or use a local .json file with a fallback mechanism (e.g., dotenv, or explicit conditional check if needed for local-only file)
-const serviceAccount = JSON.parse(process.env.FIREBASE_ADMIN_CREDENTIALS);
+// Initialize Firebase Admin SDK (replace with your actual service account key path or content)
+// Ensure your Firebase service account key is correctly set up.
+// For Render, you might store it as an environment variable or load from a JSON file.
+// Example for environment variable (recommended for production):
+// const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY);
+// For local development, you might use a file:
+// const serviceAccount = require('./path/to/your/serviceAccountKey.json');
+
+// Using environment variable for service account key (BEST PRACTICE FOR DEPLOYMENT)
+// Make sure you have a FIREBASE_SERVICE_ACCOUNT_KEY environment variable on Render
+// that contains the entire JSON content of your Firebase service account key.
+let serviceAccount;
+try {
+    if (process.env.FIREBASE_SERVICE_ACCOUNT_KEY) {
+        serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY);
+    } else {
+        // Fallback for local development if not using environment variables (adjust path)
+        serviceAccount = require('./serviceAccountKey.json'); // Make sure this file exists locally
+    }
+} catch (e) {
+    console.error("Failed to parse FIREBASE_SERVICE_ACCOUNT_KEY or load serviceAccountKey.json:", e);
+    process.exit(1); // Exit if Firebase credentials can't be loaded
+}
+
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
+    credential: admin.credential.cert(serviceAccount)
 });
 
-// Initialize Firestore Database
 const db = admin.firestore();
+const app = express();
 
-// 3. Initialize Express App and Port
-const app = express(); // Initialize Express app (ONLY ONCE)
-const PORT = process.env.PORT || 3000; // Use port from environment (Render) or default to 3000 (local)
+// --- CORS Configuration (VERY IMPORTANT for frontend-backend communication) ---
+// This middleware must be placed before any route handlers.
+// For development, allow all origins. In production, restrict to your frontend domain.
+app.use(cors({
+    origin: '*', // Allow all origins for now. Change to your specific frontend URL in production, e.g., 'https://akramjoes1.github.io'
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Explicitly allow methods
+    allowedHeaders: ['Content-Type', 'Authorization'], // Explicitly allow headers
+    credentials: true // Allow cookies/auth headers to be sent cross-origin (if used)
+}));
 
-// 4. Middleware Setup
-app.use(cors()); // Enable CORS for all requests (important for frontend-backend communication)
-app.use(bodyParser.json()); // To parse JSON request bodies
-app.use(bodyParser.urlencoded({ extended: true })); // To parse URL-encoded request bodies
+// Use body-parser middleware for parsing JSON and URL-encoded data
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-// 5. API Endpoints
 
-// Root endpoint for a simple check
+const PORT = process.env.PORT || 10000; // Use port 10000 as specified by Render config
+
+// Helper function to generate referral code
+function generateReferralCode() {
+    return Math.random().toString(36).substring(2, 8).toUpperCase();
+}
+
+// Helper function to check if a user is an admin
+const isAdminUser = async (userId) => {
+    if (!userId) return false;
+    const userDoc = await db.collection('users').doc(userId).get();
+    return userDoc.exists && userDoc.data().isAdmin === true;
+};
+
+
+// --- API Endpoints ---
+
+// Root endpoint for health check
 app.get('/', (req, res) => {
-    res.send('Welcome to the DailyEarners Backend API!');
+    res.status(200).send('Dailyearners Backend is Running!');
 });
 
-// Endpoint to get investment packages from Firestore
-app.get('/api/packages', async (req, res) => {
-    try {
-        const packagesRef = db.collection('investment_packages'); // Reference to your Firestore collection
-        const snapshot = await packagesRef.get(); // Get all documents in the collection
-
-        const packages = [];
-        snapshot.forEach(doc => {
-            // Add the document's data to the packages array
-            packages.push(doc.data());
-        });
-
-        res.json(packages); // Send the packages as JSON response
-    } catch (error) {
-        console.error('Error fetching investment packages from Firestore:', error);
-        res.status(500).json({ message: 'Failed to fetch investment packages', error: error.message });
-    }
-});
-
-// User Login Endpoint
-app.post('/api/login', async (req, res) => {
-    const { email, password } = req.body; // Expect email and password from the frontend
-
-    // Basic validation
-    if (!email || !password) {
-        return res.status(400).json({ message: 'Email and password are required.' });
-    }
-
-    try {
-        const usersRef = db.collection('users');
-
-        // 1. Find user by email in Firestore
-        const snapshot = await usersRef.where('email', '==', email).limit(1).get(); // Limit to 1 result
-        if (snapshot.empty) {
-            // User not found
-            return res.status(401).json({ message: 'Invalid credentials.' });
-        }
-
-        // Get user data and document ID
-        const userDoc = snapshot.docs[0];
-        const userData = userDoc.data();
-        const userId = userDoc.id; // Get the Firestore document ID
-
-        // 2. Compare provided password with stored hashed password
-        const isMatch = await bcrypt.compare(password, userData.password);
-
-        if (!isMatch) {
-            // Passwords do not match
-            return res.status(401).json({ message: 'Invalid credentials.' });
-        }
-
-        // 3. Login successful: Return non-sensitive user data
-        // For a real application, you would typically generate and return a JWT (JSON Web Token) here.
-        // For now, we'll return essential user details.
-        res.status(200).json({
-            message: 'Login successful!',
-            // Return only necessary, non-sensitive data
-            user: {
-                id: userId, // The Firestore document ID
-                username: userData.username,
-                email: userData.email,
-                phone: userData.phone,
-                balance: userData.balance || 0,
-                investments: userData.investments || [],
-                depositHistory: userData.depositHistory || [],
-                withdrawHistory: userData.withdrawHistory || [],
-                referralCode: userData.referralCode || null,
-                referredBy: userData.referredBy || null
-            }
-        });
-
-    } catch (error) {
-        console.error('Error during user login:', error);
-        res.status(500).json({ message: 'Internal server error during login.', error: error.message });
-    }
-});
-// In server.js, replace your existing /api/register endpoint with this:
+// Register Endpoint
 app.post('/api/register', async (req, res) => {
-    const { username, email, password, phone, referralCode } = req.body; // Added referralCode
+    const { username, email, password, phone, referralCode } = req.body;
 
     try {
         const userRef = db.collection('users').doc(email); // Use email as doc ID
@@ -124,23 +85,18 @@ app.post('/api/register', async (req, res) => {
             return res.status(400).json({ message: 'Email already registered.' });
         }
 
-        // Generate a referral code for the new user
         const newUserReferralCode = generateReferralCode();
 
-        // Check if the registering user used a referral code
         let referredByUserId = null;
         if (referralCode) {
             const referrerUserDoc = await db.collection('users').where('referralCode', '==', referralCode).limit(1).get();
             if (!referrerUserDoc.empty) {
                 referredByUserId = referrerUserDoc.docs[0].id; // Get the email (doc ID) of the referrer
-                // Optional: Add referral bonus to the referrer here if you want
-                // Example: await db.collection('users').doc(referredByUserId).update({ balance: FieldValue.increment(REFERRAL_BONUS_AMOUNT) });
             }
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Determine if the user is an admin
         const isAdmin = (email === 'ty@gmail.com'); // Designate ty@gmail.com as admin
 
         await userRef.set({
@@ -148,13 +104,13 @@ app.post('/api/register', async (req, res) => {
             email,
             phone,
             password: hashedPassword,
-            balance: 0, // Initial balance
+            balance: 0,
             investments: [],
             depositHistory: [],
             withdrawHistory: [],
-            referralCode: newUserReferralCode, // Store the generated referral code
-            referredBy: referredByUserId, // Store who referred this user
-            isAdmin: isAdmin, // Set admin status
+            referralCode: newUserReferralCode,
+            referredBy: referredByUserId,
+            isAdmin: isAdmin,
             createdAt: new Date().toISOString()
         });
 
@@ -166,18 +122,58 @@ app.post('/api/register', async (req, res) => {
     }
 });
 
+// Login Endpoint
+app.post('/api/login', async (req, res) => {
+    const { email, password } = req.body;
 
-// In server.js, replace your existing /api/deposit endpoint with this:
+    try {
+        const userRef = db.collection('users').doc(email); // Use email as doc ID
+        const userDoc = await userRef.get();
+
+        if (!userDoc.exists) {
+            return res.status(400).json({ message: 'Invalid credentials.' });
+        }
+
+        const userData = userDoc.data();
+        const passwordMatch = await bcrypt.compare(password, userData.password);
+
+        if (!passwordMatch) {
+            return res.status(400).json({ message: 'Invalid credentials.' });
+        }
+
+        // Return user data (excluding password for security)
+        const userToReturn = {
+            id: userDoc.id, // The email used as document ID
+            username: userData.username,
+            email: userData.email,
+            phone: userData.phone,
+            balance: userData.balance,
+            investments: userData.investments,
+            depositHistory: userData.depositHistory,
+            withdrawHistory: userData.withdrawHistory,
+            referralCode: userData.referralCode,
+            referredBy: userData.referredBy,
+            isAdmin: userData.isAdmin || false // Ensure isAdmin is always a boolean
+        };
+
+        res.status(200).json({ message: 'Login successful!', user: userToReturn });
+
+    } catch (error) {
+        console.error('Error during login:', error);
+        res.status(500).json({ message: 'Internal server error during login.' });
+    }
+});
+
+// Deposit Endpoint
 app.post('/api/deposit', async (req, res) => {
     const { userId, amount, method } = req.body;
 
-    // Basic validation
     if (!userId || typeof amount !== 'number' || amount <= 0 || !method) {
         return res.status(400).json({ message: 'Invalid deposit data provided.' });
     }
 
     try {
-        const userRef = db.collection('users').doc(userId); // userId is the email
+        const userRef = db.collection('users').doc(userId);
         const userDoc = await userRef.get();
 
         if (!userDoc.exists) {
@@ -187,7 +183,6 @@ app.post('/api/deposit', async (req, res) => {
         const userData = userDoc.data();
         let depositHistory = userData.depositHistory || [];
 
-        // Create a new deposit record with status 'Pending'
         const newDeposit = {
             id: Date.now().toString(), // Unique ID for the transaction
             date: new Date().toISOString(),
@@ -198,7 +193,6 @@ app.post('/api/deposit', async (req, res) => {
 
         depositHistory.push(newDeposit);
 
-        // Update user document in Firestore to add to deposit history
         await userRef.update({
             depositHistory: depositHistory
         });
@@ -214,29 +208,62 @@ app.post('/api/deposit', async (req, res) => {
         res.status(500).json({ message: 'Internal server error during deposit request.', error: error.message });
     }
 });
-// Helper function: Generates a simple, unique referral code
-// This is a basic implementation; for production, consider a more robust unique ID generator.
-function generateReferralCode() {
-    // Generates a 6-character uppercase alphanumeric string
-    return Math.random().toString(36).substring(2, 8).toUpperCase();
-}
 
+// Withdrawal Endpoint (Initial version - will be updated for approval)
+app.post('/api/withdraw', async (req, res) => {
+    const { userId, amount, method, account } = req.body;
 
-// 6. Start the Server
-// This should always be the last part of your server.js file.
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+    if (!userId || typeof amount !== 'number' || amount <= 0 || !method || !account) {
+        return res.status(400).json({ message: 'Invalid withdrawal data provided.' });
+    }
+
+    try {
+        const userRef = db.collection('users').doc(userId);
+        const userDoc = await userRef.get();
+
+        if (!userDoc.exists) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+
+        const userData = userDoc.data();
+        if (userData.balance < amount) {
+            return res.status(400).json({ message: 'Insufficient balance for withdrawal.' });
+        }
+
+        let withdrawHistory = userData.withdrawHistory || [];
+
+        const newWithdrawal = {
+            id: Date.now().toString(), // Unique ID for the transaction
+            date: new Date().toISOString(),
+            amount: amount,
+            method: method,
+            account: account,
+            status: 'Pending' // Initial status is now Pending
+        };
+
+        withdrawHistory.push(newWithdrawal);
+
+        // Do NOT deduct balance immediately. Deduct on approval.
+        await userRef.update({
+            withdrawHistory: withdrawHistory
+        });
+
+        res.status(200).json({
+            message: 'Withdrawal request submitted for approval.',
+            withdrawalRecord: newWithdrawal,
+            currentBalance: userData.balance // Return current balance, not updated yet
+        });
+
+    } catch (error) {
+        console.error('Error during withdrawal request submission:', error);
+        res.status(500).json({ message: 'Internal server error during withdrawal request.', error: error.message });
+    }
 });
-// Function to check if a user is an admin (based on email 'ty@gmail.com' for now)
-const isAdminUser = async (userId) => {
-    if (!userId) return false;
-    const userDoc = await db.collection('users').doc(userId).get();
-    return userDoc.exists && userDoc.data().isAdmin === true;
-};
+
 
 // Admin Endpoint: Get Pending Transactions (Deposits and Withdrawals)
 app.get('/api/admin/pending-transactions', async (req, res) => {
-    const adminUserId = req.query.userId; // Expect userId from frontend to check admin status
+    const adminUserId = req.query.userId; // Expect userId (email) from frontend to check admin status
 
     if (!await isAdminUser(adminUserId)) {
         return res.status(403).json({ message: 'Unauthorized: Admin access required.' });
@@ -304,8 +331,7 @@ app.post('/api/admin/approve-transaction', async (req, res) => {
         if (type === 'deposit') {
             updatedHistory = (userData.depositHistory || []).map(tx => {
                 if (tx.id === transactionId && tx.status === 'Pending') {
-                    // Update user's balance on deposit approval
-                    newBalance += tx.amount;
+                    newBalance += tx.amount; // Update user's balance on deposit approval
                     return { ...tx, status: 'Approved' };
                 }
                 return tx;
@@ -318,15 +344,15 @@ app.post('/api/admin/approve-transaction', async (req, res) => {
 
         } else if (type === 'withdrawal') {
             // For withdrawals, check if user has enough balance *before* approving
-            // This is a critical security/logic check.
             if (newBalance < amount) {
+                // This scenario should ideally not happen if frontend validates,
+                // but it's a critical backend check.
                 return res.status(400).json({ message: 'Insufficient user balance for this withdrawal approval.' });
             }
 
             updatedHistory = (userData.withdrawHistory || []).map(tx => {
                 if (tx.id === transactionId && tx.status === 'Pending') {
-                    // Deduct from balance on withdrawal approval
-                    newBalance -= tx.amount;
+                    newBalance -= tx.amount; // Deduct from balance on withdrawal approval
                     return { ...tx, status: 'Approved' };
                 }
                 return tx;
@@ -401,7 +427,8 @@ app.post('/api/admin/reject-transaction', async (req, res) => {
     }
 });
 
-// Helper function to generate referral code (if not already defined)
-function generateReferralCode() {
-    return Math.random().toString(36).substring(2, 8).toUpperCase();
-}
+
+// --- Start the server ---
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
