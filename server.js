@@ -55,72 +55,6 @@ app.get('/api/packages', async (req, res) => {
     }
 });
 
-// User Registration Endpoint
-app.post('/api/register', async (req, res) => {
-    const { username, email, password, phone } = req.body; // Expect these fields from the frontend
-
-    // Basic validation (you should add more robust validation later)
-    if (!username || !email || !password || !phone) {
-        return res.status(400).json({ message: 'All fields (username, email, password, phone) are required.' });
-    }
-
-    // Password strength validation (example)
-    if (password.length < 6) {
-        return res.status(400).json({ message: 'Password must be at least 6 characters long.' });
-    }
-
-    try {
-        const usersRef = db.collection('users');
-
-        // 1. Check if user already exists by email
-        const emailSnapshot = await usersRef.where('email', '==', email).get();
-        if (!emailSnapshot.empty) {
-            return res.status(409).json({ message: 'Email already registered.' });
-        }
-
-        // 2. Check if username already exists
-        const usernameSnapshot = await usersRef.where('username', '==', username).get();
-        if (!usernameSnapshot.empty) {
-            return res.status(409).json({ message: 'Username already taken.' });
-        }
-
-        // 3. Hash the password for security
-        // The salt is a random string added to the password before hashing,
-        // making it harder to crack using rainbow tables.
-        const salt = await bcrypt.genSalt(10); // 10 rounds for salt generation (good balance of security/speed)
-        const hashedPassword = await bcrypt.hash(password, salt); // Hash the password with the generated salt
-
-        // 4. Create new user document in Firestore
-        const newUser = {
-            username,
-            email,
-            phone,
-            password: hashedPassword, // Store the hashed password, NOT the plain text password
-            balance: 0, // All new users start with 0 balance
-            investments: [], // Array to store future investment IDs or summaries for the user
-            depositHistory: [], // Array for deposit transaction records
-            withdrawHistory: [], // Array for withdrawal transaction records
-            referralCode: generateReferralCode(), // Generate a unique referral code for the new user
-            referredBy: null, // Field to store the referral code of the user who referred them (if any)
-            createdAt: admin.firestore.FieldValue.serverTimestamp() // Firestore timestamp for when the user was created
-        };
-
-        const docRef = await usersRef.add(newUser); // Add the new user data to the 'users' collection
-
-        // 5. Respond with success message (do NOT send back sensitive info like password hash)
-        res.status(201).json({
-            message: 'Registration successful. Please log in.',
-            userId: docRef.id, // The ID of the newly created document in Firestore
-            username: newUser.username,
-            email: newUser.email
-        });
-
-    } catch (error) {
-        // Handle any errors that occur during the registration process
-        console.error('Error during user registration:', error);
-        res.status(500).json({ message: 'Internal server error during registration.', error: error.message });
-    }
-});
 // User Login Endpoint
 app.post('/api/login', async (req, res) => {
     const { email, password } = req.body; // Expect email and password from the frontend
@@ -178,9 +112,64 @@ app.post('/api/login', async (req, res) => {
         res.status(500).json({ message: 'Internal server error during login.', error: error.message });
     }
 });
-// Deposit Endpoint
+// In server.js, replace your existing /api/register endpoint with this:
+app.post('/api/register', async (req, res) => {
+    const { username, email, password, phone, referralCode } = req.body; // Added referralCode
+
+    try {
+        const userRef = db.collection('users').doc(email); // Use email as doc ID
+        const userDoc = await userRef.get();
+
+        if (userDoc.exists) {
+            return res.status(400).json({ message: 'Email already registered.' });
+        }
+
+        // Generate a referral code for the new user
+        const newUserReferralCode = generateReferralCode();
+
+        // Check if the registering user used a referral code
+        let referredByUserId = null;
+        if (referralCode) {
+            const referrerUserDoc = await db.collection('users').where('referralCode', '==', referralCode).limit(1).get();
+            if (!referrerUserDoc.empty) {
+                referredByUserId = referrerUserDoc.docs[0].id; // Get the email (doc ID) of the referrer
+                // Optional: Add referral bonus to the referrer here if you want
+                // Example: await db.collection('users').doc(referredByUserId).update({ balance: FieldValue.increment(REFERRAL_BONUS_AMOUNT) });
+            }
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Determine if the user is an admin
+        const isAdmin = (email === 'ty@gmail.com'); // Designate ty@gmail.com as admin
+
+        await userRef.set({
+            username,
+            email,
+            phone,
+            password: hashedPassword,
+            balance: 0, // Initial balance
+            investments: [],
+            depositHistory: [],
+            withdrawHistory: [],
+            referralCode: newUserReferralCode, // Store the generated referral code
+            referredBy: referredByUserId, // Store who referred this user
+            isAdmin: isAdmin, // Set admin status
+            createdAt: new Date().toISOString()
+        });
+
+        res.status(201).json({ message: 'Registration successful! Please log in.', referralCode: newUserReferralCode, isAdmin: isAdmin });
+
+    } catch (error) {
+        console.error('Error during registration:', error);
+        res.status(500).json({ message: 'Internal server error during registration.' });
+    }
+});
+
+
+// In server.js, replace your existing /api/deposit endpoint with this:
 app.post('/api/deposit', async (req, res) => {
-    const { userId, amount, method } = req.body; // Expect userId, amount, method from frontend
+    const { userId, amount, method } = req.body;
 
     // Basic validation
     if (!userId || typeof amount !== 'number' || amount <= 0 || !method) {
@@ -188,7 +177,7 @@ app.post('/api/deposit', async (req, res) => {
     }
 
     try {
-        const userRef = db.collection('users').doc(userId);
+        const userRef = db.collection('users').doc(userId); // userId is the email
         const userDoc = await userRef.get();
 
         if (!userDoc.exists) {
@@ -196,38 +185,33 @@ app.post('/api/deposit', async (req, res) => {
         }
 
         const userData = userDoc.data();
-        let currentBalance = userData.balance || 0;
         let depositHistory = userData.depositHistory || [];
 
-        // Update balance
-        currentBalance += amount;
-
-        // Create a new deposit record
+        // Create a new deposit record with status 'Pending'
         const newDeposit = {
-            date: new Date().toISOString(), // Use ISO string for consistent date format
+            id: Date.now().toString(), // Unique ID for the transaction
+            date: new Date().toISOString(),
             amount: amount,
             method: method,
-            status: 'Completed' // For simulation, assume instant completion
+            status: 'Pending' // Initial status is now Pending
         };
 
-        // Add to deposit history
         depositHistory.push(newDeposit);
 
-        // Update user document in Firestore
+        // Update user document in Firestore to add to deposit history
         await userRef.update({
-            balance: currentBalance,
             depositHistory: depositHistory
         });
 
         res.status(200).json({
-            message: 'Deposit successful!',
-            newBalance: currentBalance,
-            depositRecord: newDeposit
+            message: 'Deposit request submitted for approval.',
+            depositRecord: newDeposit,
+            currentBalance: userData.balance // Return current balance, not updated yet
         });
 
     } catch (error) {
-        console.error('Error during deposit:', error);
-        res.status(500).json({ message: 'Internal server error during deposit.', error: error.message });
+        console.error('Error during deposit request submission:', error);
+        res.status(500).json({ message: 'Internal server error during deposit request.', error: error.message });
     }
 });
 // Helper function: Generates a simple, unique referral code
@@ -243,3 +227,181 @@ function generateReferralCode() {
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
+// Function to check if a user is an admin (based on email 'ty@gmail.com' for now)
+const isAdminUser = async (userId) => {
+    if (!userId) return false;
+    const userDoc = await db.collection('users').doc(userId).get();
+    return userDoc.exists && userDoc.data().isAdmin === true;
+};
+
+// Admin Endpoint: Get Pending Transactions (Deposits and Withdrawals)
+app.get('/api/admin/pending-transactions', async (req, res) => {
+    const adminUserId = req.query.userId; // Expect userId from frontend to check admin status
+
+    if (!await isAdminUser(adminUserId)) {
+        return res.status(403).json({ message: 'Unauthorized: Admin access required.' });
+    }
+
+    try {
+        const usersSnapshot = await db.collection('users').get();
+        let pendingTransactions = [];
+
+        usersSnapshot.forEach(doc => {
+            const userData = doc.data();
+            const userId = doc.id; // User's email
+
+            // Check pending deposits
+            const pendingDeposits = (userData.depositHistory || []).filter(
+                tx => tx.status === 'Pending'
+            ).map(tx => ({ ...tx, userId: userId, type: 'deposit' }));
+
+            pendingTransactions = pendingTransactions.concat(pendingDeposits);
+
+            // Check pending withdrawals
+            const pendingWithdrawals = (userData.withdrawHistory || []).filter(
+                tx => tx.status === 'Pending'
+            ).map(tx => ({ ...tx, userId: userId, type: 'withdrawal' }));
+
+            pendingTransactions = pendingTransactions.concat(pendingWithdrawals);
+        });
+
+        // Sort by date (oldest first)
+        pendingTransactions.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+        res.status(200).json(pendingTransactions);
+
+    } catch (error) {
+        console.error('Error fetching pending transactions:', error);
+        res.status(500).json({ message: 'Internal server error fetching pending transactions.', error: error.message });
+    }
+});
+
+
+// Admin Endpoint: Approve Transaction
+app.post('/api/admin/approve-transaction', async (req, res) => {
+    const { adminUserId, userId, transactionId, type, amount } = req.body; // type: 'deposit' or 'withdrawal'
+
+    if (!await isAdminUser(adminUserId)) {
+        return res.status(403).json({ message: 'Unauthorized: Admin access required.' });
+    }
+
+    if (!userId || !transactionId || !type || typeof amount !== 'number') {
+        return res.status(400).json({ message: 'Invalid transaction data for approval.' });
+    }
+
+    try {
+        const userRef = db.collection('users').doc(userId);
+        const userDoc = await userRef.get();
+
+        if (!userDoc.exists) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+
+        const userData = userDoc.data();
+        let updatedHistory;
+        let newBalance = userData.balance || 0;
+
+        if (type === 'deposit') {
+            updatedHistory = (userData.depositHistory || []).map(tx => {
+                if (tx.id === transactionId && tx.status === 'Pending') {
+                    // Update user's balance on deposit approval
+                    newBalance += tx.amount;
+                    return { ...tx, status: 'Approved' };
+                }
+                return tx;
+            });
+            await userRef.update({
+                depositHistory: updatedHistory,
+                balance: newBalance // Update balance for deposits
+            });
+            res.status(200).json({ message: 'Deposit approved successfully!', newBalance: newBalance });
+
+        } else if (type === 'withdrawal') {
+            // For withdrawals, check if user has enough balance *before* approving
+            // This is a critical security/logic check.
+            if (newBalance < amount) {
+                return res.status(400).json({ message: 'Insufficient user balance for this withdrawal approval.' });
+            }
+
+            updatedHistory = (userData.withdrawHistory || []).map(tx => {
+                if (tx.id === transactionId && tx.status === 'Pending') {
+                    // Deduct from balance on withdrawal approval
+                    newBalance -= tx.amount;
+                    return { ...tx, status: 'Approved' };
+                }
+                return tx;
+            });
+            await userRef.update({
+                withdrawHistory: updatedHistory,
+                balance: newBalance // Update balance for withdrawals
+            });
+            res.status(200).json({ message: 'Withdrawal approved successfully!', newBalance: newBalance });
+
+        } else {
+            return res.status(400).json({ message: 'Invalid transaction type.' });
+        }
+
+    } catch (error) {
+        console.error('Error approving transaction:', error);
+        res.status(500).json({ message: 'Internal server error during transaction approval.', error: error.message });
+    }
+});
+
+
+// Admin Endpoint: Reject Transaction
+app.post('/api/admin/reject-transaction', async (req, res) => {
+    const { adminUserId, userId, transactionId, type } = req.body;
+
+    if (!await isAdminUser(adminUserId)) {
+        return res.status(403).json({ message: 'Unauthorized: Admin access required.' });
+    }
+
+    if (!userId || !transactionId || !type) {
+        return res.status(400).json({ message: 'Invalid transaction data for rejection.' });
+    }
+
+    try {
+        const userRef = db.collection('users').doc(userId);
+        const userDoc = await userRef.get();
+
+        if (!userDoc.exists) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+
+        const userData = userDoc.data();
+        let updatedHistory;
+
+        if (type === 'deposit') {
+            updatedHistory = (userData.depositHistory || []).map(tx => {
+                if (tx.id === transactionId && tx.status === 'Pending') {
+                    return { ...tx, status: 'Rejected' };
+                }
+                return tx;
+            });
+            await userRef.update({ depositHistory: updatedHistory });
+            res.status(200).json({ message: 'Deposit rejected successfully!' });
+
+        } else if (type === 'withdrawal') {
+            updatedHistory = (userData.withdrawHistory || []).map(tx => {
+                if (tx.id === transactionId && tx.status === 'Pending') {
+                    return { ...tx, status: 'Rejected' };
+                }
+                return tx;
+            });
+            await userRef.update({ withdrawHistory: updatedHistory });
+            res.status(200).json({ message: 'Withdrawal rejected successfully!' });
+
+        } else {
+            return res.status(400).json({ message: 'Invalid transaction type.' });
+        }
+
+    } catch (error) {
+        console.error('Error rejecting transaction:', error);
+        res.status(500).json({ message: 'Internal server error during transaction rejection.', error: error.message });
+    }
+});
+
+// Helper function to generate referral code (if not already defined)
+function generateReferralCode() {
+    return Math.random().toString(36).substring(2, 8).toUpperCase();
+}
