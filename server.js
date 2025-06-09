@@ -36,14 +36,30 @@ admin.initializeApp({
 const db = admin.firestore();
 const app = express();
 
-// --- CORS Configuration (VERY IMPORTANT for frontend-backend communication) ---
-// This middleware must be placed before any route handlers.
-// For development, allow all origins. In production, restrict to your frontend domain.
+// --- MANUAL CORS HEADERS (FORCING FOR DEBUGGING) ---
+// This middleware explicitly sets CORS headers for all requests, including OPTIONS.
+// It should be placed *before* app.use(cors()) and any other route handlers.
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*'); // Allow all origins
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS'); // Allow all standard methods
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Allow necessary headers
+    res.setHeader('Access-Control-Allow-Credentials', 'true'); // Allow credentials if needed
+    
+    // Handle preflight OPTIONS request
+    if (req.method === 'OPTIONS') {
+        return res.status(204).send(); // Respond with 204 No Content for preflight
+    }
+    next(); // Continue to next middleware/route for actual requests
+});
+// --- END MANUAL CORS HEADERS ---
+
+
+// --- CORS Configuration (Keep this for robustness, but manual headers are primary now) ---
 app.use(cors({
-    origin: '*', // Allow all origins for now. Change to your specific frontend URL in production, e.g., 'https://akramjoes1.github.io'
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Explicitly allow methods
-    allowedHeaders: ['Content-Type', 'Authorization'], // Explicitly allow headers
-    credentials: true // Allow cookies/auth headers to be sent cross-origin (if used)
+    origin: '*', // This is now somewhat redundant due to manual headers but good to keep.
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
 }));
 
 // Use body-parser middleware for parsing JSON and URL-encoded data
