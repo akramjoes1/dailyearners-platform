@@ -1085,24 +1085,59 @@
             loginForm.addEventListener('submit', handleLogin);
         }
 
-        function handleLogin(event) {
-            event.preventDefault();
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
+        <script>
+    // ... (Your existing JavaScript code, including API_BASE_URL and debugging logs) ...
 
-            // This logic still uses localStorage for users, will be updated for backend login
-            const user = users.find(u => u.email === email && u.password === password);
+    // --- User Login (NOW INTEGRATED WITH BACKEND) ---
+    const loginForm = document.getElementById('login-form');
+    if (loginForm) {
+        loginForm.addEventListener('submit', handleLogin);
+    }
 
-            if (user) {
-                currentUser = user;
-                sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
-                updateAuthButtons();
-                alert('Login successful!');
-                showPage('my-account-page');
+    async function handleLogin(event) {
+        event.preventDefault(); // Prevent default form submission
+        console.log('handleLogin function called.'); // Debugging: Confirm function execution
+
+        const email = document.getElementById('loginEmail').value.trim();
+        const password = document.getElementById('loginPassword').value;
+
+        try {
+            console.log('Sending login request to backend...'); // Debugging: Indicate fetch start
+            // Send login data to the backend
+            const response = await fetch(`${API_BASE_URL}/api/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json' // Tell the server we're sending JSON
+                },
+                body: JSON.stringify({ email, password }) // Convert JS object to JSON string
+            });
+
+            console.log('Received raw response from backend:', response); // Debugging: Show raw response object
+            const data = await response.json(); // Always attempt to parse JSON response
+            console.log('Parsed response data:', data); // Debugging: Show parsed data
+
+            if (response.ok) {
+                // Login successful!
+                currentUser = data.user; // Store the user data returned from backend
+                sessionStorage.setItem('currentUser', JSON.stringify(currentUser)); // Save to session storage
+                updateAuthButtons(); // Update UI for logged-in state
+                alert(data.message || 'Login successful!');
+                console.log('Login success:', data);
+                showPage('my-account-page'); // Redirect to My Account page
             } else {
-                alert('Invalid email or password.');
+                // Login failed (e.g., invalid credentials, network error from backend)
+                alert('Login failed: ' + (data.message || 'An unknown error occurred.'));
+                console.error('Login error response:', data); // Log the backend's error message
             }
+        } catch (error) {
+            // Handle any network errors or issues with the fetch operation itself
+            console.error('Error during frontend login fetch:', error);
+            alert('An error occurred during login. Please try again later.');
         }
+    }
+
+    // ... (rest of your JavaScript code, including updateAuthButtons and showPage functions) ...
+</script>
 
 
         // --- Dashboard and Account Details Update ---
