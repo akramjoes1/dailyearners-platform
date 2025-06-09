@@ -18,227 +18,153 @@
             --text-color: #e0e0e0; /* Light text on dark backgrounds */
             --dark-text: #333; /* Dark text on light backgrounds */
             --border-color: #3f3e5e; /* Subtler border */
-            --card-bg: #2b2b4a; /* Card background */
+            --card-bg: #2b264a; /* Card background */
             --header-footer-bg: #16213e; /* Even darker for header/footer */
             --button-hover: #0056b3; /* Darker blue on hover */
             --gradient-start: #1a2a6c; /* Deep blue for gradients */
             --gradient-end: #b21f1f; /* Red for gradients */
-            --glow-color: rgba(255, 255, 0, 0.6); /* Yellowish glow */
-            --font-main: 'Open Sans', sans-serif;
-            --font-heading: 'Baskerville Old Face', serif;
-            --font-body: 'Times New Roman', serif;
+            --gradient-middle: #2b5876; /* Mid blue for gradients */
         }
 
         body {
-            font-family: var(--font-main);
+            font-family: 'Open Sans', sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, var(--dark-bg), var(--gradient-start));
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-middle), var(--gradient-end));
             color: var(--text-color);
-            line-height: 1.6;
-            overflow-x: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start; /* Align to top */
             min-height: 100vh;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1400px; /* Wider container */
-            background-color: var(--dark-bg);
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-            border-radius: 15px;
-            overflow: hidden;
-            margin: 20px;
             display: flex;
             flex-direction: column;
-            min-height: calc(100vh - 40px);
+            scroll-behavior: smooth;
         }
 
+        /* Utility Classes */
+        .text-center { text-align: center; }
+        .text-left { text-align: left; }
+        .text-right { text-align: right; }
+        .mt-4 { margin-top: 1rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+        .px-4 { padding-left: 1rem; padding-right: 1rem; }
+        .rounded-lg { border-radius: 0.5rem; }
+        .shadow-lg { box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1); }
+        .bg-gray-800 { background-color: #2d3748; }
+        .text-white { color: white; }
+        .text-blue-400 { color: #63b3ed; }
+        .text-green-400 { color: #68d391; }
+        .hidden { display: none !important; }
+
+        /* Header */
         header {
-            background: linear-gradient(90deg, var(--header-footer-bg), #0f3460);
-            padding: 20px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 3px solid var(--primary-color);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            background-color: var(--header-footer-bg);
+            color: var(--text-color);
+            padding: 1rem 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
             position: sticky;
             top: 0;
             z-index: 1000;
         }
 
-        .logo-section {
+        .header-content {
             display: flex;
+            justify-content: space-between;
             align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
         }
 
-        .dailyearners-logo {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            margin-right: 15px;
-            border: 2px solid var(--secondary-color);
-            box-shadow: 0 0 15px var(--glow-color);
-        }
-
-        header h1 {
-            font-family: var(--font-heading);
-            font-size: 2.2em;
-            color: var(--secondary-color);
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
-            margin: 0;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            position: relative; /* For bonus positioning */
-        }
-
-        .welcome-message {
-            font-size: 1.1em;
-            color: var(--accent-color);
-            font-weight: bold;
-            transition: opacity 0.5s ease-in-out;
-            opacity: 0; /* Hidden by default */
-        }
-
-        .current-username {
-            font-size: 1.2em;
+        .logo {
+            font-family: 'Baskerville Old Face', serif;
+            font-size: 2.2rem;
             font-weight: bold;
             color: var(--secondary-color);
-            text-shadow: 0 0 8px rgba(255, 255, 0, 0.5);
-        }
-
-        .balance-container {
-            background-color: var(--card-bg);
-            padding: 10px 15px;
-            border-radius: 25px;
-            display: flex;
-            align-items: center;
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--border-color);
-        }
-
-        .balance-container .label {
-            font-size: 0.9em;
-            color: var(--primary-color);
-            margin-right: 8px;
-            font-weight: bold;
-        }
-
-        #account-balance {
-            font-size: 1.3em;
-            font-weight: bold;
-            color: var(--accent-color);
-            text-shadow: 0 0 10px rgba(0, 255, 0, 0.4);
-        }
-
-        .welcome-bonus {
-            position: absolute;
-            top: -10px;
-            right: -10px;
-            background-color: var(--accent-color);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 0.9em;
-            animation: bounceIn 0.8s ease-out;
-            box-shadow: 0 0 15px var(--accent-color);
-            display: none; /* Hidden by default */
-            z-index: 10;
-        }
-
-        @keyframes bounceIn {
-            0% { transform: scale(0.3); opacity: 0; }
-            50% { transform: scale(1.1); opacity: 1; }
-            70% { transform: scale(0.9); }
-            100% { transform: scale(1); }
-        }
-
-        .logout-btn {
-            background-color: var(--danger-color);
-            color: white;
-            padding: 10px 18px;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 1em;
-            font-weight: bold;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .logout-btn:hover {
-            background-color: #c82333;
-            transform: translateY(-2px);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
 
         /* Navigation */
-        nav {
-            background-color: var(--card-bg);
-            padding: 15px 30px;
-            border-bottom: 2px solid var(--primary-color);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
-
         nav ul {
             list-style: none;
-            margin: 0;
             padding: 0;
+            margin: 0;
             display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
+            gap: 1.5rem;
         }
 
-        nav ul li {
-            margin: 5px 10px;
-        }
-
-        nav ul li a {
+        nav a {
             color: var(--text-color);
             text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 25px;
-            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
             font-weight: bold;
-            font-size: 1.05em;
-            display: block;
-            text-align: center;
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
         }
 
-        nav ul li a:hover, nav ul li a.active-link {
+        nav a:hover,
+        nav a.active-link {
             background-color: var(--primary-color);
             color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
 
-        /* Main Content Pages */
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .auth-buttons button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .auth-buttons button:hover {
+            background-color: var(--button-hover);
+            transform: translateY(-2px);
+        }
+
+        .auth-buttons button:last-child {
+            background-color: var(--accent-color);
+        }
+
+        .auth-buttons button:last-child:hover {
+            background-color: #218838;
+        }
+
+        /* Main Content */
         main {
-            padding: 30px;
             flex-grow: 1;
+            padding: 2rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             flex-direction: column;
+            gap: 2rem;
+            color: var(--dark-text); /* Ensure main content text is readable */
         }
 
         .page {
-            display: none;
-            animation: fadeIn 0.8s ease-out;
-            min-height: 500px; /* Ensure content area is visible */
-            padding: 20px;
-            background-color: var(--dark-bg); /* Match container bg */
-            border-radius: 10px;
-            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.2);
-            margin-bottom: 20px;
+            background-color: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            margin-bottom: 2rem;
+            display: none; /* Hidden by default */
+            animation: fadeIn 0.5s ease-out;
+            color: var(--text-color); /* Light text on dark card backgrounds */
         }
 
         .page.active {
-            display: block;
+            display: block; /* Shown when active */
         }
 
         @keyframes fadeIn {
@@ -247,1162 +173,775 @@
         }
 
         h2 {
-            font-family: var(--font-heading);
-            color: var(--secondary-color);
+            color: var(--primary-color);
             text-align: center;
-            margin-bottom: 30px;
-            font-size: 2.5em;
-            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
+            margin-bottom: 2rem;
+            font-size: 2.2rem;
+            font-family: 'Times New Roman', serif;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
         }
 
         h3 {
-            font-family: var(--font-heading);
-            color: var(--primary-color);
-            margin-top: 25px;
-            margin-bottom: 15px;
-            font-size: 1.8em;
-            text-align: center;
-        }
-
-        h4 {
-            font-family: var(--font-heading);
-            color: var(--accent-color);
-            margin-top: 20px;
-            margin-bottom: 10px;
-            font-size: 1.5em;
-            text-align: center;
+            color: var(--secondary-color);
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
         }
 
         p {
-            font-family: var(--font-body);
-            font-size: 1.1em;
-            margin-bottom: 1em;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
         }
 
-        /* Auth Forms (Login/Registration/Forgot Password) */
-        .auth-form {
-            background-color: var(--card-bg);
-            padding: 40px;
-            border-radius: 10px;
-            max-width: 500px;
-            margin: 40px auto;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-            border: 1px solid var(--border-color);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: var(--primary-color);
-            font-size: 1.1em;
-        }
-
-        .form-group input[type="text"],
-        .form-group input[type="password"],
-        .form-group input[type="email"],
-        .form-group input[type="tel"],
-        .form-group input[type="number"],
-        .form-group select {
-            width: calc(100% - 20px);
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            background-color: var(--dark-bg);
-            color: var(--text-color);
-            font-size: 1em;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3);
-        }
-
-        .form-group input:focus, .form-group select:focus {
-            border-color: var(--primary-color);
-            outline: none;
-            box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
-        }
-
-        .auth-form button[type="submit"] {
-            width: 100%;
-            padding: 15px;
-            background-color: var(--primary-color);
+        .cta-button {
+            display: inline-block;
+            background-color: var(--accent-color);
             color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1.2em;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            text-decoration: none;
             font-weight: bold;
+            font-size: 1.2rem;
             transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 6px 15px rgba(0, 123, 255, 0.4);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            margin-top: 1.5rem;
         }
 
-        .auth-form button[type="submit"]:hover {
-            background-color: var(--button-hover);
+        .cta-button:hover {
+            background-color: #218838;
             transform: translateY(-3px);
         }
 
-        .auth-form p {
-            text-align: center;
-            margin-top: 20px;
+        /* Auth Forms */
+        .auth-form {
+            max-width: 500px;
+            margin: 2rem auto;
+            background-color: var(--header-footer-bg); /* Darker background for forms */
+            padding: 2.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
             color: var(--text-color);
+        }
+
+        .auth-form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+
+        .auth-form input[type="text"],
+        .auth-form input[type="email"],
+        .auth-form input[type="password"],
+        .auth-form input[type="tel"],
+        .auth-form input[type="number"] {
+            width: calc(100% - 20px);
+            padding: 0.8rem 10px;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            background-color: #3f3e5e; /* Input background */
+            color: var(--text-color);
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .auth-form input[type="text"]:focus,
+        .auth-form input[type="email"]:focus,
+        .auth-form input[type="password"]:focus,
+        .auth-form input[type="tel"]:focus,
+        .auth-form input[type="number"]:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+            outline: none;
+        }
+
+        .auth-form button {
+            width: 100%;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .auth-form button:hover {
+            background-color: var(--button-hover);
+            transform: translateY(-2px);
+        }
+
+        .auth-form p {
+            margin-top: 1rem;
+            text-align: center;
+            font-size: 0.95rem;
         }
 
         .auth-form a {
             color: var(--secondary-color);
             text-decoration: none;
             font-weight: bold;
-            transition: color 0.3s ease;
         }
 
         .auth-form a:hover {
-            color: var(--accent-color);
+            text-decoration: underline;
         }
 
-        .forgot-password-link {
-            display: block;
-            text-align: right;
-            margin-top: -10px;
-            font-size: 0.9em;
+        /* Dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
         }
 
-        /* Home Page Specifics */
-        .hero-section {
-            position: relative;
-            width: 100%;
-            height: 400px;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 40px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-        }
-
-        .hero-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: brightness(0.6); /* Darken image */
-            transition: filter 0.5s ease;
-        }
-        .hero-image:hover {
-            filter: brightness(0.75);
-        }
-
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+        .dashboard-card {
+            background-color: var(--header-footer-bg);
+            padding: 1.8rem;
+            border-radius: 1rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
             text-align: center;
-            background: rgba(0, 0, 0, 0.4);
-            padding: 20px;
-        }
-
-        .hero-overlay h2 {
-            font-size: 3.5em;
-            color: var(--secondary-color);
-            text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.7);
-            margin-bottom: 15px;
-            animation: slideInDown 1s ease-out;
-        }
-
-        .hero-overlay p {
-            font-size: 1.8em;
-            color: white;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
-            animation: fadeIn 1.5s ease-out;
-        }
-
-        @keyframes slideInDown {
-            from { transform: translateY(-50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .mission-section {
-            background-color: var(--card-bg);
-            padding: 30px;
-            border-radius: 10px;
-            margin-bottom: 40px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            border: 1px solid var(--border-color);
-        }
-
-        .mission-section p {
-            max-width: 800px;
-            margin: 0 auto 30px auto;
-            font-size: 1.15em;
             color: var(--text-color);
         }
 
-        .how-we-earn {
-            margin-top: 40px;
-        }
-
-        .earning-methods {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 25px;
-            margin-top: 30px;
-        }
-
-        .method-card {
-            background-color: var(--dark-bg);
-            padding: 25px;
-            border-radius: 10px;
-            text-align: center;
-            width: 280px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--primary-color);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .method-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 25px rgba(0, 123, 255, 0.5);
-        }
-
-        .method-card .icon {
-            font-size: 3em;
-            color: var(--secondary-color);
-            margin-bottom: 15px;
-            text-shadow: 0 0 10px var(--glow-color);
-        }
-
-        .method-card h5 {
-            font-family: var(--font-heading);
+        .dashboard-card h3 {
             color: var(--primary-color);
-            font-size: 1.4em;
-            margin-bottom: 10px;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
         }
 
-        .method-card p {
-            font-size: 0.95em;
+        .dashboard-card p {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .dashboard-card span {
+            font-size: 0.9rem;
             color: var(--text-color);
+        }
+
+        .dashboard-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .dashboard-buttons button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dashboard-buttons button:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+
+        .dashboard-buttons button:first-child {
+            background-color: var(--primary-color);
+        }
+
+        .dashboard-buttons button:first-child:hover {
+            background-color: var(--button-hover);
+        }
+
+        .investment-summary {
+            background-color: var(--header-footer-bg);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            margin-top: 2rem;
+            color: var(--text-color);
+        }
+
+        .investment-summary h3 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .investment-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .investment-table th,
+        .investment-table td {
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        .investment-table th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        .investment-table tr:nth-child(even) {
+            background-color: #3f3e5e; /* Lighter dark for even rows */
+        }
+
+        .investment-table tr:hover {
+            background-color: #4a456e; /* Hover effect */
+        }
+
+        .timer-display {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-top: 1rem;
+            text-align: center;
         }
 
         /* Investment Packages */
         .packages-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            padding: 20px;
+            gap: 2rem;
+            margin-top: 2rem;
         }
 
         .package-card {
-            background-color: var(--card-bg);
-            padding: 30px;
-            border-radius: 12px;
+            background-color: var(--header-footer-bg);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
             text-align: center;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-            border: 2px solid var(--primary-color);
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .package-card::before {
-            content: '';
-            position: absolute;
-            top: -20px;
-            left: -20px;
-            right: -20px;
-            bottom: -20px;
-            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
-            z-index: 0;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-
-        .package-card:hover::before {
-            opacity: 1;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .package-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 15px 30px rgba(0, 123, 255, 0.6);
-            border-color: var(--secondary-color);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
         }
 
         .package-card h3 {
-            font-size: 2em;
             color: var(--secondary-color);
-            margin-bottom: 15px;
-            text-shadow: 0 0 10px var(--glow-color);
-            position: relative;
-            z-index: 1;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
         }
 
         .package-card p {
-            font-family: var(--font-body);
-            font-size: 1.1em;
-            color: var(--text-color);
-            margin-bottom: 10px;
-            position: relative;
-            z-index: 1;
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
         }
 
         .package-card .investment-range {
-            font-weight: bold;
-            color: var(--accent-color);
-            font-size: 1.2em;
-        }
-
-        .package-card .daily-earning {
-            font-size: 1.3em;
-            font-weight: bold;
             color: var(--primary-color);
-            margin-top: 15px;
+            font-weight: bold;
         }
 
+        .package-card .daily-earning,
         .package-card .duration {
-            font-size: 0.95em;
-            color: var(--light-bg);
+            color: var(--accent-color);
+            font-style: italic;
         }
 
         .package-card .apply-btn {
-            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            background-color: var(--primary-color);
             color: white;
-            padding: 12px 25px;
             border: none;
-            border-radius: 25px;
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.75rem;
             cursor: pointer;
-            font-size: 1.1em;
             font-weight: bold;
-            margin-top: 20px;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
-            position: relative;
-            z-index: 1;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            margin-top: 1.5rem;
         }
 
         .package-card .apply-btn:hover {
-            background: linear-gradient(45deg, var(--accent-color), var(--primary-color));
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.6);
-        }
-
-        /* Deposit/Withdraw Pages */
-        .deposit-options, .withdraw-info {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 30px;
-            margin-top: 30px;
-            margin-bottom: 40px;
-        }
-
-        .deposit-method {
-            background-color: var(--card-bg);
-            padding: 30px;
-            border-radius: 12px;
-            text-align: center;
-            width: 300px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-            border: 2px solid var(--border-color);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .deposit-method:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
-            border-color: var(--secondary-color);
-        }
-
-        .payment-logo {
-            width: 100px;
-            height: 100px;
-            object-fit: contain;
-            margin-bottom: 20px;
-            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
-        }
-
-        .deposit-method h3 {
-            font-family: var(--font-heading);
-            color: var(--primary-color);
-            margin-bottom: 10px;
-            font-size: 1.6em;
-        }
-
-        .deposit-method p {
-            font-family: var(--font-body);
-            font-size: 1em;
-            color: var(--text-color);
-            margin-bottom: 5px;
-        }
-
-        .deposit-method button {
-            background-color: var(--accent-color);
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 1em;
-            font-weight: bold;
-            margin-top: 15px;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .deposit-method button:hover {
-            background-color: #218838;
-            transform: translateY(-3px);
-        }
-
-        .deposit-info, .withdraw-info {
-            text-align: center;
-            background-color: var(--card-bg);
-            padding: 20px;
-            border-radius: 10px;
-            max-width: 600px;
-            margin: 20px auto;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--border-color);
-        }
-        .deposit-info p, .withdraw-info p {
-            font-size: 1.1em;
-            margin: 5px 0;
-            color: var(--secondary-color);
-        }
-
-        /* Tables */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background-color: var(--card-bg);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--border-color);
-        }
-
-        table th, table td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid var(--border-color);
-            color: var(--text-color);
-            font-family: var(--font-body);
-        }
-
-        table th {
-            background-color: var(--primary-color);
-            color: white;
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 0.9em;
-            letter-spacing: 0.5px;
-        }
-
-        table tr:nth-child(even) {
-            background-color: #38385a; /* Slightly lighter row */
-        }
-
-        table tr:hover {
-            background-color: #4c4c7a; /* Highlight on hover */
-            transition: background-color 0.2s ease;
-        }
-
-        .deposit-history, .withdraw-history, .referred-users, .my-investments {
-            margin-top: 40px;
-            text-align: center;
-        }
-
-        .deposit-history h3, .withdraw-history h3, .referred-users h3, .my-investments h3 {
-            margin-bottom: 20px;
-            font-family: var(--font-heading);
-            color: var(--secondary-color);
-        }
-
-        /* My Account Page */
-        .investment-timer-info {
-            text-align: center;
-            margin-top: 30px;
-            background-color: var(--card-bg);
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--border-color);
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .investment-timer-info p {
-            font-size: 1.2em;
-            color: var(--primary-color);
-            margin: 0;
-        }
-
-        #daily-timer {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: var(--accent-color);
-            text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
-        }
-
-        .account-details {
-            background-color: var(--card-bg);
-            padding: 30px;
-            border-radius: 10px;
-            margin-top: 40px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--border-color);
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .account-details p {
-            font-size: 1.1em;
-            margin-bottom: 10px;
-            color: var(--text-color);
-        }
-
-        .account-details p strong {
-            color: var(--primary-color);
-            font-family: var(--font-main);
-        }
-
-        /* Referral Page */
-        .referral-code-section {
-            text-align: center;
-            background-color: var(--card-bg);
-            padding: 25px;
-            border-radius: 10px;
-            margin-bottom: 40px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--border-color);
-        }
-        .referral-code-section p {
-            font-size: 1.3em;
-            color: var(--secondary-color);
-            margin-bottom: 15px;
-        }
-        .referral-code-section strong {
-            background-color: var(--dark-bg);
-            padding: 8px 15px;
-            border-radius: 5px;
-            border: 1px dashed var(--primary-color);
-            font-family: 'Courier New', Courier, monospace;
-            letter-spacing: 1px;
-        }
-        .referral-code-section button {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 1em;
-            font-weight: bold;
-            margin-left: 15px;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-        .referral-code-section button:hover {
             background-color: var(--button-hover);
             transform: translateY(-2px);
         }
 
-        .referral-bonus-table {
-            margin-bottom: 40px;
+        .sparkle-effect {
+            position: relative;
+            overflow: hidden;
         }
 
-        /* Customer Care & Contact Pages */
-        .customer-care-options, .contact-info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            padding: 20px;
-            margin-top: 30px;
+        .sparkle-effect::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            opacity: 0;
+            transform: scale(0) translate(-50%, -50%);
+            transition: all 0.5s ease;
         }
 
-        .contact-option, .contact-card {
-            background-color: var(--card-bg);
-            padding: 30px;
-            border-radius: 12px;
+        .sparkle-effect:hover::after {
+            transform: scale(100) translate(-50%, -50%);
+            opacity: 1;
+        }
+
+        /* Deposit/Withdrawal */
+        .deposit-methods,
+        .withdraw-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .method-card {
+            background-color: var(--header-footer-bg);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
             text-align: center;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-            border: 2px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .contact-option:hover, .contact-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
-            border-color: var(--accent-color);
+        .method-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
         }
 
-        .social-logo {
-            width: 80px;
-            height: 80px;
-            margin-bottom: 15px;
-            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.2));
+        .method-card img {
+            max-width: 80px;
+            height: auto;
+            margin-bottom: 0.8rem;
+            border-radius: 0.5rem;
         }
 
-        .contact-option .icon, .contact-card .icon {
-            font-size: 3.5em;
+        .method-card h4 {
             color: var(--secondary-color);
-            margin-bottom: 15px;
-            text-shadow: 0 0 10px var(--glow-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
         }
 
-        .contact-option h3, .contact-card h3 {
-            font-family: var(--font-heading);
-            font-size: 1.8em;
-            color: var(--primary-color);
-            margin-bottom: 10px;
-        }
-
-        .contact-option p, .contact-card p {
-            font-family: var(--font-body);
-            font-size: 1.05em;
+        .method-card p {
+            font-size: 0.95rem;
             color: var(--text-color);
+            margin-bottom: 0.8rem;
         }
 
-        .contact-link {
-            display: block;
-            margin-top: 10px;
-            color: var(--accent-color);
-            text-decoration: none;
+        .method-card .deposit-range,
+        .method-card .withdraw-range {
             font-weight: bold;
-            font-size: 1.1em;
-            transition: color 0.3s ease;
+            color: var(--accent-color);
         }
 
-        .contact-link:hover {
-            color: var(--secondary-color);
-            text-decoration: underline;
-        }
-
-        .edition-info {
-            text-align: center;
-            margin-top: 40px;
+        .deposit-history,
+        .withdraw-history {
+            background-color: var(--header-footer-bg);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            margin-top: 2rem;
             color: var(--text-color);
-            font-size: 0.9em;
         }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .history-table th,
+        .history-table td {
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        .history-table th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        .history-table tr:nth-child(even) {
+            background-color: #3f3e5e;
+        }
+
+        .history-table tr:hover {
+            background-color: #4a456e;
+        }
+
 
         /* Footer */
         footer {
             background-color: var(--header-footer-bg);
             color: var(--text-color);
             text-align: center;
-            padding: 20px;
-            margin-top: 40px;
-            border-top: 2px solid var(--primary-color);
-            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        footer p {
-            margin: 0;
-            font-size: 0.9em;
-            color: var(--light-bg);
+            padding: 1.5rem 1rem;
+            margin-top: auto;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+            font-size: 0.9rem;
         }
 
         /* Responsive Design */
-        @media (max-width: 992px) {
-            header {
+        @media (max-width: 768px) {
+            .header-content {
                 flex-direction: column;
-                text-align: center;
-                gap: 15px;
+                gap: 1rem;
             }
-            .user-info {
-                flex-direction: column;
-                gap: 10px;
-            }
-            .welcome-bonus {
-                top: auto;
-                right: auto;
-                bottom: -5px;
-                left: 50%;
-                transform: translateX(-50%);
-            }
+
             nav ul {
-                flex-direction: column;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
             }
-            nav ul li {
-                margin: 5px 0;
+
+            .auth-buttons {
+                width: 100%;
+                justify-content: center;
             }
-            .hero-overlay h2 {
-                font-size: 2.8em;
+
+            .page {
+                padding: 1.5rem;
             }
-            .hero-overlay p {
-                font-size: 1.4em;
+
+            h2 {
+                font-size: 1.8rem;
             }
-            .packages-grid, .earning-methods, .deposit-options, .customer-care-options, .contact-info-grid {
+
+            .dashboard-grid,
+            .packages-grid {
                 grid-template-columns: 1fr;
-            }
-            .method-card, .deposit-method, .contact-option, .contact-card {
-                width: auto;
             }
         }
 
-        @media (max-width: 600px) {
-            header h1 {
-                font-size: 1.8em;
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.8rem;
             }
-            .dailyearners-logo {
-                width: 40px;
-                height: 40px;
+
+            nav a {
+                font-size: 0.9rem;
+                padding: 0.4rem 0.8rem;
             }
-            nav ul li a {
-                padding: 8px 15px;
-                font-size: 0.95em;
+
+            .auth-buttons button {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
             }
-            .hero-overlay h2 {
-                font-size: 2em;
-            }
-            .hero-overlay p {
-                font-size: 1.2em;
-            }
-            h2 {
-                font-size: 2em;
-            }
+
             .auth-form {
-                padding: 25px;
+                padding: 1.5rem;
+                margin: 1rem auto;
+            }
+
+            .dashboard-card p {
+                font-size: 1.5rem;
+            }
+
+            .package-card {
+                padding: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="logo-section">
-                 <img src="images/dailyearners_logo.png" alt="DailyEarners Logo" onerror="this.src='https://placehold.co/50x50/007bff/ffffff?text=DE';">
-                <h1>Dailyearners Investment Platform</h1>
+    <header>
+        <div class="header-content">
+            <div class="logo">Dailyearners</div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="nav-link active-link" data-page="home-page">Home</a></li>
+                    <li><a href="#" class="nav-link" data-page="investment-packages-page">Investment Packages</a></li>
+                    <li><a href="#" class="nav-link" data-page="deposit-page">Deposit</a></li>
+                    <li><a href="#" class="nav-link" data-page="withdraw-page">Withdraw</a></li>
+                    <li><a href="#" class="nav-link" data-page="my-account-page" id="myAccountNavLink">My Account</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <button id="loginBtn" class="login-btn">Login</button>
+                <button id="registerBtn" class="register-btn">Register</button>
+                <button id="logoutBtn" class="logout-btn hidden">Logout</button>
             </div>
-            <div class="user-info">
-                <span id="welcome-message" class="welcome-message"></span>
-                <span id="current-username" class="current-username" style="display:none;"></span>
-                <div class="balance-container" style="display:none;">
-                    <span class="label">Account Balance:</span>
-                    <span id="account-balance">UGX 0.00</span>
-                </div>
-                <div class="welcome-bonus" id="welcome-bonus">UGX 4000 Bonus!</div>
-                <button class="logout-btn" style="display:none;">Logout</button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Home Page -->
+        <section id="home-page" class="page active">
+            <h2>Welcome to Dailyearners Investment Platform</h2>
+            <p>Your journey to financial growth starts here. Invest with confidence and watch your earnings grow daily.</p>
+            <div class="text-center mt-4">
+                <a href="#" class="cta-button nav-link" data-page="investment-packages-page">Explore Packages</a>
             </div>
-        </header>
-
-        <nav>
-            <ul>
-                <li><a href="#" class="nav-link active-link" data-page="home-page">Home</a></li>
-                <li><a href="#" class="nav-link" data-page="investment-packages-page">Investment Packages</a></li>
-                <li><a href="#" class="nav-link" data-page="deposit-page">Deposit</a></li>
-                <li><a href="#" class="nav-link" data-page="withdraw-page">Withdraw</a></li>
-                <li><a href="#" class="nav-link" data-page="referral-page">Referral</a></li>
-                <li><a href="#" class="nav-link" data-page="my-account-page">My Account</a></li>
-                <li><a href="#" class="nav-link" data-page="customer-care-page">Customer Care</a></li>
-                <li><a href="#" class="nav-link" data-page="contact-page">Contact Us</a></li>
-            </ul>
-        </nav>
-
-        <main>
-            <section id="home-page" class="page active">
-                <div class="hero-section">
-                    <img src="images/stock_market_growth.png" alt="Stock Market Growth" onerror="this.src='https://placehold.co/600x400/28a745/ffffff?text=Stock+Market+Growth';">
-                    <div class="hero-overlay">
-                        <h2>Forge Your Financial Freedom</h2>
-                        <p>Dailyearners Investment Platform - 2025</p>
-                    </div>
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <h3>Total Earnings</h3>
+                    <p>UGX <span id="totalEarningsDisplay">0.00</span></p>
+                    <span>Total income generated across all investments.</span>
                 </div>
-                <div class="mission-section">
-                    <h3>Our Mission</h3>
-                    <p>Empowering individuals to achieve financial independence through intelligent and transparent investment in the dynamic world of stocks and trading. We provide accessible opportunities for daily earnings and long-term wealth growth, ensuring a secure and prosperous future for our community.</p>
-                    <div class="how-we-earn">
-                        <h4>How We Generate Money</h4>
-                        <div class="earning-methods">
-                            <div class="method-card">
-                                <i class="fas fa-chart-line icon"></i>
-                                <h5>Stock Trading</h5>
-                                <p>Leveraging market fluctuations to buy and sell stocks for profit.</p>
-                            </div>
-                            <div class="method-card">
-                                <i class="fas fa-hand-holding-usd icon"></i>
-                                <h5>Long-Term Stock Holdings</h5>
-                                <p>Investing in fundamentally strong companies for sustained growth.</p>
-                            </div>
-                            <div class="method-card">
-                                <i class="fas fa-money-bill-wave icon"></i>
-                                <h5>Diversified Portfolio Management</h5>
-                                <p>Strategically managing a mix of assets to maximize returns and minimize risks.</p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="dashboard-card">
+                    <h3>Daily ROI</h3>
+                    <p><span id="dailyRoiDisplay">Up to 15%</span></p>
+                    <span>Earn a significant return on your investment daily.</span>
                 </div>
-            </section>
-
-            <section id="login-page" class="page">
-                <h2>Login to Your Account</h2>
-                <form id="login-form" class="auth-form">
-                    <div class="form-group">
-                        <label for="login-username">Username:</label>
-                        <input type="text" id="login-username" required autocomplete="username">
-                    </div>
-                    <div class="form-group">
-                        <label for="login-password">Password:</label>
-                        <input type="password" id="login-password" required autocomplete="current-password">
-                    </div>
-                    <button type="submit">Login</button>
-                    <a href="#" onclick="showPage('forgot-password-page')" class="forgot-password-link">Forgot Password?</a>
-                    <p>Don't have an account? <a href="#" onclick="showPage('registration-page')">Register here</a></p>
-                </form>
-            </section>
-
-            <section id="registration-page" class="page">
-                <h2>Create Your Dailyearners Account</h2>
-                <form id="registration-form" class="auth-form">
-                    <div class="form-group">
-                        <label for="reg-username">Username:</label>
-                        <input type="text" id="reg-username" required autocomplete="new-username">
-                    </div>
-                    <div class="form-group">
-                        <label for="reg-tel">Telephone Number:</label>
-                        <input type="tel" id="reg-tel" pattern="[0-9]{10,15}" placeholder="e.g., 07XXXXXXXX" required autocomplete="tel">
-                    </div>
-                    <div class="form-group">
-                        <label for="reg-email">Email:</label>
-                        <input type="email" id="reg-email" required autocomplete="email">
-                    </div>
-                    <div class="form-group">
-                        <label for="reg-password">Password:</label>
-                        <input type="password" id="reg-password" required autocomplete="new-password">
-                    </div>
-                    <div class="form-group">
-                        <label for="reg-confirm-password">Confirm Password:</label>
-                        <input type="password" id="reg-confirm-password" required autocomplete="new-password">
-                    </div>
-                    <button type="submit">Register</button>
-                    <p>Already have an account? <a href="#" onclick="showPage('login-page')">Login here</a></p>
-                </form>
-            </section>
-
-            <section id="forgot-password-page" class="page">
-                <h2>Reset Your Password</h2>
-                <form id="forgot-password-form" class="auth-form">
-                    <p>Enter the email address associated with your account. A reset link will be sent to this email.</p>
-                    <div class="form-group">
-                        <label for="forgot-email">Email:</label>
-                        <input type="email" id="forgot-email" required autocomplete="email">
-                    </div>
-                    <button type="submit">Send Reset Link</button>
-                    <p><a href="#" onclick="showPage('login-page')">Back to Login</a></p>
-                </form>
-            </section>
-
-            <section id="investment-packages-page" class="page">
-                <h2>Our Investment Packages - Secure Your Future</h2>
-                <div class="packages-grid">
-                    <div class="package-card" data-min="10000" data-max="40000" data-earning="5" data-name="Basic Plan">
-                        <h3>Basic Plan</h3>
-                        <p class="investment-range">UGX 10,000 - UGX 40,000</p>
-                        <p class="daily-earning">Daily Earning: 5%</p>
-                        <p class="duration">Duration: 21 Days</p>
-                        <button class="apply-btn">Apply Now</button>
-                    </div>
-                    <div class="package-card" data-min="50000" data-max="90000" data-earning="8" data-name="Standard Plan">
-                        <h3>Standard Plan</h3>
-                        <p class="investment-range">UGX 50,000 - UGX 90,000</p>
-                        <p class="daily-earning">Daily Earning: 8%</p>
-                        <p class="duration">Duration: 21 Days</p>
-                        <button class="apply-btn">Apply Now</button>
-                    </div>
-                    <div class="package-card" data-min="100000" data-max="200000" data-earning="10" data-name="Premium VIP">
-                        <h3>Premium VIP</h3>
-                        <p class="investment-range">UGX 100,000 - UGX 200,000</p>
-                        <p class="daily-earning">Daily Earning: 10%</p>
-                        <p class="duration">Duration: 21 Days</p>
-                        <button class="apply-btn">Apply Now</button>
-                    </div>
-                    <div class="package-card" data-min="300000" data-max="4900000" data-earning="15" data-name="Fixed Deposit 30 Days">
-                        <h3>Fixed Deposit 30 Days</h3>
-                        <p class="investment-range">UGX 300,000 - UGX 4,900,000</p>
-                        <p class="daily-earning">Daily Earning: 15%</p>
-                        <p class="duration">Duration: 21 Days</p>
-                        <button class="apply-btn">Apply Now</button>
-                    </div>
-                    <div class="package-card" data-min="500000" data-max="1500000" data-earning="15" data-name="Fixed Deposit 60 Days">
-                        <h3>Fixed Deposit 60 Days</h3>
-                        <p class="investment-range">UGX 500,000 - UGX 1,500,000</p>
-                        <p class="daily-earning">Daily Earning: 15%</p>
-                        <p class="duration">Duration: 21 Days</p>
-                        <button class="apply-btn">Apply Now</button>
-                    </div>
-                    <div class="package-card" data-min="1600000" data-max="3000000" data-earning="15" data-name="Platinum Elite">
-                        <h3>Platinum Elite</h3>
-                        <p class="investment-range">UGX 1,600,000 - UGX 3,000,000</p>
-                        <p class="daily-earning">Daily Earning: 15%</p>
-                        <p class="duration">Duration: 21 Days</p>
-                        <button class="apply-btn">Apply Now</button>
-                    </div>
-                </div>
-            </section>
-
-            <section id="deposit-page" class="page">
-                <h2>Deposit Funds - Grow Your Capital</h2>
-                <div class="deposit-options">
-                    <div class="deposit-method">
-                        <img src="images/mtn_logo.png" alt="MTN Mobile Money Logo" class="payment-logo" onerror="this.src='https://placehold.co/100x40/FFD700/000000?text=MTN';">
-                        <h3>MTN Mobile Money</h3>
-                        <p>Send money to:</p>
-                        <p><strong>0746160623</strong></p>
-                        <p>Account Name: <strong>KISAKYE REAGAN</strong></p>
-                        <button onclick="promptDepositAmount('MTN Mobile Money')">Deposit via MTN</button>
-                    </div>
-                    <div class="deposit-method">
-                        <img src="images/airtel_logo.png" alt="Airtel Money Logo" class="payment-logo" onerror="this.src='https://placehold.co/100x40/FF0000/FFFFFF?text=Airtel';">
-                        <h3>Airtel Money</h3>
-                        <p>Send money to:</p>
-                        <p><strong>0746160623</strong></p>
-                        <p>Account Name: <strong>KISAKYE REAGAN</strong></p>
-                        <button onclick="promptDepositAmount('Airtel Money')">Deposit via Airtel</button>
-                    </div>
-                    <div class="deposit-method">
-                        <img src="images/binance_logo.png" alt="Binance Logo" class="payment-logo" onerror="this.src='https://placehold.co/100x40/FCD535/121212?text=Binance';">
-                        <h3>Binance (USDT TRC20)</h3>
-                        <p>Wallet Address: <strong>(Coming soon)</strong></p>
-                        <p>Network: <strong>TRC20</strong></p>
-                        <button onclick="promptDepositAmount('Binance')">Deposit via Binance</button>
-                    </div>
-                </div>
-                <div class="deposit-info">
-                    <p>Minimum Deposit: UGX 10,000</p>
-                    <p>Maximum Deposit: UGX 3,000,000</p>
-                </div>
-                <div class="deposit-history">
-                    <h3>Deposit History</h3>
-                    <table id="deposit-history-table">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Amount</th>
-                                <th>Method</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            </tbody>
-                    </table>
-                </div>
-            </section>
-
-            <section id="withdraw-page" class="page">
-                <h2>Withdraw Funds - Enjoy Your Earnings</h2>
-                <form id="withdraw-form" class="auth-form">
-                    <div class="form-group">
-                        <label for="withdraw-amount">Amount to Withdraw (UGX):</label>
-                        <input type="number" id="withdraw-amount" min="7000" max="3000000" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="withdraw-method">Withdraw Method:</label>
-                        <select id="withdraw-method" required>
-                            <option value="">Select Method</option>
-                            <option value="MTN Mobile Money">MTN Mobile Money</option>
-                            <option value="Airtel Money">Airtel Money</option>
-                            <option value="Binance">Binance (USDT)</option>
-                        </select>
-                    </div>
-                    <div class="form-group" id="withdraw-number-group">
-                        <label for="withdraw-number">Mobile Number / Binance Wallet Address:</label>
-                        <input type="text" id="withdraw-number" required>
-                    </div>
-                    <button type="submit">Request Withdrawal</button>
-                </form>
-                <div class="withdraw-info">
-                    <p>Minimum Withdraw: UGX 7,000</p>
-                </div>
-                <div class="withdraw-history">
-                    <h3>Withdraw History</h3>
-                    <table id="withdraw-history-table">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Amount</th>
-                                <th>Method</th>
-                                <th>Status</th>
-                                <th>Admin Approval</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            </tbody>
-                    </table>
-                </div>
-            </section>
-
-            <section id="my-account-page" class="page">
-                <h2>My Investment Portfolio</h2>
-                <div class="my-investments">
+                <div class="dashboard-card">
                     <h3>Active Investments</h3>
-                    <table id="active-investments-table">
-                        <thead>
-                            <tr>
-                                <th>Package Name</th>
-                                <th>Invested Amount (UGX)</th>
-                                <th>Daily Earning (%)</th>
-                                <th>Days Remaining</th>
-                                <th>Daily Timer</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            </tbody>
-                    </table>
+                    <p><span id="activeInvestmentsDisplay">0</span></p>
+                    <span>Current number of active investment plans.</span>
                 </div>
-                <div class="account-details">
-                    <h3>Account Details</h3>
-                    <p><strong>Username:</strong> <span id="my-account-username-display"></span></p>
-                    <p><strong>Email:</strong> <span id="my-account-email-display"></span></p>
-                    <p><strong>Telephone:</strong> <span id="my-account-tel-display"></span></p>
-                </div>
-            </section>
+            </div>
+        </section>
 
-            <section id="referral-page" class="page">
-                <h2>Refer & Earn - Expand Your Network</h2>
-                <div class="referral-code-section">
-                    <p>Your Referral Link: <a href="#" id="referral-link-display" class="contact-link">dailyearners.com/username</a></p>
-                    <button onclick="copyReferralLink()">Copy Link</button>
-                </div>
-                <div class="referral-bonus-table">
-                    <h3>Referral Bonus Structure</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Investment Amount (UGX)</th>
-                                <th>Referral Bonus (%)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>UGX 10,000 - UGX 3,000,000+</td><td>10%</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="referred-users">
-                    <h3>My Referrals</h3>
-                    <table id="referred-users-table">
-                        <thead>
-                            <tr>
-                                <th>Referral Username</th>
-                                <th>Investment Made (UGX)</th>
-                                <th>Your Bonus (UGX)</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            </tbody>
-                    </table>
-                </div>
-            </section>
+        <!-- Investment Packages Page -->
+        <section id="investment-packages-page" class="page">
+            <h2>Our Investment Packages - Secure Your Future</h2>
+            <div class="packages-grid">
+                <!-- Investment packages will be dynamically loaded here by JavaScript -->
+                <h3 style="color: var(--primary-color); text-align: center;">Loading Investment Packages...</h3>
+                <p style="color: var(--text-color); text-align: center;">Please ensure your Node.js backend server is running and accessible.</p>
+            </div>
+        </section>
 
-            <section id="customer-care-page" class="page">
-                <h2>Customer Care - We're Here to Help</h2>
-                <div class="customer-care-options">
-                    <div class="contact-option">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/1200px-WhatsApp.svg.png" alt="WhatsApp Logo" class="social-logo">
-                        <h3>WhatsApp Support</h3>
-                        <p>Chat with us on WhatsApp:</p>
-                        <a href="https://wa.me/256746160623" target="_blank" class="contact-link">0746160623</a>
-                    </div>
-                    <div class="contact-option">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram Logo" class="social-logo">
-                        <h3>Telegram Support</h3>
-                        <p>Connect with us on Telegram:</p>
-                        <a href="https://t.me/256700913516" target="_blank" class="contact-link">0700913516</a>
-                    </div>
-                    <div class="contact-option">
-                        <i class="fas fa-envelope icon"></i>
-                        <h3>Email Support</h3>
-                        <p>Send us an email:</p>
-                        <a href="mailto:dailyearners123@gmail.com" class="contact-link">dailyearners123@gmail.com</a>
-                    </div>
+        <!-- Deposit Page -->
+        <section id="deposit-page" class="page">
+            <h2>Deposit Funds - Grow Your Capital</h2>
+            <p class="text-center">Choose a method to deposit funds. Minimum deposit: UGX 10,000, Maximum: UGX 3,000,000.</p>
+            <div class="deposit-methods">
+                <div class="method-card" onclick="promptDepositAmount('MTN Mobile Money')">
+                    <img src="https://placehold.co/80x80/005792/ffffff?text=MTN" alt="MTN Logo">
+                    <h4>MTN Mobile Money</h4>
+                    <p class="deposit-range">UGX 10,000 - UGX 3,000,000</p>
+                    <p>Instant deposit, secure and reliable.</p>
                 </div>
-            </section>
+                <div class="method-card" onclick="promptDepositAmount('Airtel Money')">
+                    <img src="https://placehold.co/80x80/C62828/ffffff?text=Airtel" alt="Airtel Logo">
+                    <h4>Airtel Money</h4>
+                    <p class="deposit-range">UGX 10,000 - UGX 3,000,000</p>
+                    <p>Quick and easy deposits from your Airtel account.</p>
+                </div>
+                <div class="method-card" onclick="promptDepositAmount('Bank Transfer')">
+                    <img src="https://placehold.co/80x80/283593/ffffff?text=Bank" alt="Bank Logo">
+                    <h4>Bank Transfer</h4>
+                    <p class="deposit-range">UGX 10,000 - UGX 3,000,000</p>
+                    <p>For larger deposits, typically processed within 1-2 business days.</p>
+                </div>
+            </div>
+            <div class="deposit-history">
+                <h3>Deposit History</h3>
+                <table id="deposit-history-table" class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Method</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Deposit history will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
 
-            <section id="contact-page" class="page">
-                <h2>Contact Us - Reach Out to Us</h2>
-                <div class="contact-info-grid">
-                    <div class="contact-card">
-                        <i class="fas fa-map-marker-alt icon"></i>
-                        <h3>Our Location</h3>
-                        <p>Bugubugu Arcade, Block 15, Kampala, Uganda</p>
-                    </div>
-                    <div class="contact-card">
-                        <i class="fas fa-envelope icon"></i>
-                        <h3>Email Us</h3>
-                        <p><a href="mailto:dailyearners123@gmail.com" class="contact-link">dailyearners123@gmail.com</a></p>
-                    </div>
-                    <div class="contact-card">
-                        <i class="fas fa-phone-alt icon"></i>
-                        <h3>Call Support</h3>
-                        <p>+256 746 160623</p>
-                    </div>
-                </div>
-                <div class="edition-info">
-                    <p>Edition 4</p>
-                </div>
-            </section>
-        </main>
+        <!-- Withdraw Page -->
+        <section id="withdraw-page" class="page">
+            <h2>Withdraw Funds - Enjoy Your Earnings</h2>
+            <p class="text-center">Minimum withdrawal: UGX 7,000.</p>
+            <form id="withdraw-form" class="auth-form">
+                <h3>Request Withdrawal</h3>
+                <label for="withdrawAmount">Amount (UGX):</label>
+                <input type="number" id="withdrawAmount" placeholder="Enter amount to withdraw" required min="7000">
 
-        <footer>
-            <p>&copy; 2025 Dailyearners Investment Platform. All rights reserved.</p>
-        </footer>
-    </div>
+                <label for="withdrawMethod">Withdrawal Method:</label>
+                <select id="withdrawMethod" required>
+                    <option value="">Select Method</option>
+                    <option value="MTN Mobile Money">MTN Mobile Money</option>
+                    <option value="Airtel Money">Airtel Money</option>
+                    <option value="Bank Transfer">Bank Transfer</option>
+                </select>
+
+                <label for="withdrawAccount">Mobile Number / Bank Account:</label>
+                <input type="text" id="withdrawAccount" placeholder="Enter mobile number or bank account" required>
+
+                <button type="submit">Request Withdrawal</button>
+            </form>
+            <div class="withdraw-history">
+                <h3>Withdrawal History</h3>
+                <table id="withdraw-history-table" class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Method</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Withdrawal history will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- My Account Page -->
+        <section id="my-account-page" class="page">
+            <h2>My Account Overview</h2>
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <h3>Current Balance</h3>
+                    <p>UGX <span id="accountBalanceDisplay">0.00</span></p>
+                    <span>Your available funds for investment or withdrawal.</span>
+                </div>
+                <div class="dashboard-card">
+                    <h3>Active Investments</h3>
+                    <p><span id="myAccountActiveInvestments">0</span></p>
+                    <span>Number of active investment plans you hold.</span>
+                </div>
+                <div class="dashboard-card">
+                    <h3>Total Profit</h3>
+                    <p>UGX <span id="totalProfitDisplay">0.00</span></p>
+                    <span>Total earnings from all your completed investments.</span>
+                </div>
+            </div>
+
+            <div class="investment-summary">
+                <h3>My Investments</h3>
+                <table id="my-investments-table" class="investment-table">
+                    <thead>
+                        <tr>
+                            <th>Package</th>
+                            <th>Invested</th>
+                            <th>Daily ROI</th>
+                            <th>Duration</th>
+                            <th>Earned Today</th>
+                            <th>Total Earned</th>
+                            <th>Status</th>
+                            <th>Next Earning</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Active investments will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="investment-summary">
+                <h3>Referral Program</h3>
+                <p>Share your unique referral code to earn bonuses!</p>
+                <p>Your Referral Code: <strong id="referralCodeDisplay">N/A</strong></p>
+                <input type="text" id="referralLink" readonly style="width: calc(100% - 20px); padding: 10px; margin-top: 10px; background-color: #3f3e5e; color: var(--text-color); border: 1px solid var(--border-color); border-radius: 5px;">
+                <button onclick="copyReferralLink()" style="margin-top: 10px; padding: 10px 15px; background-color: var(--accent-color); color: white; border: none; border-radius: 5px; cursor: pointer;">Copy Link</button>
+            </div>
+        </section>
+
+        <!-- Login Page -->
+        <section id="login-page" class="page">
+            <h2>Login to Your Account</h2>
+            <form id="login-form" class="auth-form">
+                <label for="loginEmail">Email:</label>
+                <input type="email" id="loginEmail" placeholder="Enter your email" required>
+
+                <label for="loginPassword">Password:</label>
+                <input type="password" id="loginPassword" placeholder="Enter your password" required>
+
+                <button type="submit">Login</button>
+                <p>Don't have an account? <a href="#" class="nav-link" data-page="register-page">Register here</a></p>
+            </form>
+        </section>
+
+        <!-- Register Page -->
+        <section id="register-page" class="page">
+            <h2>Create Your Dailyearners Account</h2>
+            <form id="register-form" class="auth-form">
+                <label for="registerUsername">Username:</label>
+                <input type="text" id="registerUsername" placeholder="Choose a username" required>
+
+                <label for="registerEmail">Email:</label>
+                <input type="email" id="registerEmail" placeholder="Enter your email" required>
+
+                <label for="registerPhone">Phone Number:</label>
+                <input type="tel" id="registerPhone" placeholder="e.g., +2567xxxxxxxx" required>
+
+                <label for="registerPassword">Password:</label>
+                <input type="password" id="registerPassword" placeholder="Create a strong password" required>
+
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="password" id="confirmPassword" placeholder="Re-enter your password" required>
+
+                <button type="submit">Register</button>
+                <p>Already have an account? <a href="#" class="nav-link" data-page="login-page">Login here</a></p>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Dailyearners Investment Platform. All rights reserved.</p>
+    </footer>
 
     <script>
-        // JavaScript for Front-End Interactivity and Simulation
+        // --- This entire script block contains all JavaScript for the frontend ---
+        console.log('Script loaded.'); // Debugging: Confirm script loading
 
-        // --- Global State Simulation (replace with backend integration) ---
-        let currentUser = null; // Stores logged-in user's data
-        let accountBalance = 0;
-        let investments = []; // Stores active investments
-        let depositHistory = [];
-        let withdrawHistory = [];
-        let users = JSON.parse(localStorage.getItem('users')) || []; // Storing registered users
-        const WELCOME_BONUS = 4000;
+        // --- Configuration ---
+        // IMPORTANT: Replace 'YOUR_LIVE_BACKEND_URL_FROM_RENDER' with your actual Render backend URL!
+        const API_BASE_URL = 'https://dailyearners-platform.onrender.com'; // e.g., 'https://dailyearners-platform.onrender.com'
+        // ---
+
+        // --- Global State Simulation (will be replaced by backend data over time) ---
+        let currentUser = JSON.parse(sessionStorage.getItem('currentUser')) || null; // Stores logged-in user's data
+        let accountBalance = currentUser ? currentUser.balance : 0;
+        let investments = currentUser ? currentUser.investments : []; // Stores active investments
+        let depositHistory = currentUser ? currentUser.depositHistory : [];
+        let withdrawHistory = currentUser ? currentUser.withdrawHistory : [];
+        let users = JSON.parse(localStorage.getItem('users')) || []; // Storing registered users (will be deprecated for Firestore)
+        const WELCOME_BONUS = 4000; // Applied locally for now
         const MIN_DEPOSIT = 10000;
         const MAX_DEPOSIT = 3000000;
         const MIN_WITHDRAW = 7000;
- // *** ADD THIS LINE HERE ***
-
-    const backendUrl = 'YOUR_LIVE_BACKEND_URL_FROM_RENDER'; // https://dailyearners-platform.onrender.com
-
-    // *************************
 
         // --- DOM Elements ---
         const pages = document.querySelectorAll('.page');
         const navLinks = document.querySelectorAll('.nav-link');
-        const loginForm = document.getElementById('login-form');
-        const registrationForm = document.getElementById('registration-form');
-        const forgotPasswordForm = document.getElementById('forgot-password-form');
-        const logoutBtn = document.querySelector('.logout-btn');
-        const accountBalanceDisplay = document.getElementById('account-balance');
-        const currentUsernameDisplay = document.getElementById('current-username');
-        const welcomeMessageDisplay = document.getElementById('welcome-message');
-        const welcomeBonusElement = document.getElementById('welcome-bonus');
-        const balanceContainer = document.querySelector('.balance-container');
-
+        const loginBtn = document.getElementById('loginBtn');
+        const registerBtn = document.getElementById('registerBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const accountBalanceDisplay = document.getElementById('accountBalanceDisplay');
+        const totalEarningsDisplay = document.getElementById('totalEarningsDisplay');
+        const dailyRoiDisplay = document.getElementById('dailyRoiDisplay');
+        const activeInvestmentsDisplay = document.getElementById('activeInvestmentsDisplay');
+        const myAccountActiveInvestments = document.getElementById('myAccountActiveInvestments');
+        const totalProfitDisplay = document.getElementById('totalProfitDisplay');
+        const myInvestmentsTableBody = document.querySelector('#my-investments-table tbody');
         const depositHistoryTableBody = document.querySelector('#deposit-history-table tbody');
         const withdrawHistoryTableBody = document.querySelector('#withdraw-history-table tbody');
-        const activeInvestmentsTableBody = document.querySelector('#active-investments-table tbody');
-        const referredUsersTableBody = document.querySelector('#referred-users-table tbody');
-
-        const myAccountUsernameDisplay = document.getElementById('my-account-username-display');
-        const myAccountEmailDisplay = document.getElementById('my-account-email-display');
-        const myAccountTelDisplay = document.getElementById('my-account-tel-display');
-        const referralLinkDisplay = document.getElementById('referral-link-display');
-
-        const withdrawForm = document.getElementById('withdraw-form');
-
-        let dailyTimerInterval = null; // To hold the interval for the 24-hour timer
-        let investmentTimers = {}; // To hold intervals for individual investment timers
-
+        const referralCodeDisplay = document.getElementById('referralCodeDisplay');
+        const referralLinkInput = document.getElementById('referralLink');
 
         // --- Page Navigation ---
         function showPage(pageId) {
@@ -1415,6 +954,16 @@
                 activeNavLink.classList.add('active-link');
             }
 
+            // Fetch and render packages when this page is active
+            if (pageId === 'investment-packages-page') {
+                fetchAndRenderPackages();
+            } else if (pageId === 'my-account-page') {
+                updateAccountDetails();
+                renderInvestments();
+                renderDepositHistory();
+                renderWithdrawHistory();
+            }
+
             // Clear form fields on page change
             document.querySelectorAll('input').forEach(input => {
                 if (input.type !== 'hidden') input.value = '';
@@ -1422,625 +971,383 @@
             document.querySelectorAll('select').forEach(select => select.selectedIndex = 0);
         }
 
+        // --- Authentication UI Management ---
+        function updateAuthButtons() {
+            if (currentUser) {
+                loginBtn.classList.add('hidden');
+                registerBtn.classList.add('hidden');
+                logoutBtn.classList.remove('hidden');
+                document.getElementById('myAccountNavLink').classList.remove('hidden');
+                // Set initial balance from currentUser object if it exists
+                accountBalance = currentUser.balance || 0;
+                investments = currentUser.investments || [];
+                depositHistory = currentUser.depositHistory || [];
+                withdrawHistory = currentUser.withdrawHistory || [];
+            } else {
+                loginBtn.classList.remove('hidden');
+                registerBtn.classList.remove('hidden');
+                logoutBtn.classList.add('hidden');
+                document.getElementById('myAccountNavLink').classList.add('hidden');
+                // Reset local state if no user
+                accountBalance = 0;
+                investments = [];
+                depositHistory = [];
+                withdrawHistory = [];
+            }
+            updateBalanceDisplay(); // Always update display
+        }
+
+        function logout() {
+            currentUser = null;
+            sessionStorage.removeItem('currentUser'); // Clear user from session
+            alert('Logged out successfully.');
+            updateAuthButtons();
+            showPage('home-page');
+            // Clear local data that might be associated with previous user
+            accountBalance = 0;
+            investments = [];
+            depositHistory = [];
+            withdrawHistory = [];
+            // Optional: Reload page to clear all client-side data
+            // window.location.reload();
+        }
+
+        // --- Event Listeners for Navigations & Auth Buttons ---
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
-                showPage(e.target.dataset.page);
+                showPage(link.dataset.page);
             });
         });
 
-        // --- User Management Simulation ---
+        loginBtn.addEventListener('click', () => showPage('login-page'));
+        registerBtn.addEventListener('click', () => showPage('register-page'));
+        logoutBtn.addEventListener('click', logout);
 
-        function saveUsers() {
-            localStorage.setItem('users', JSON.stringify(users));
+
+        // --- User Registration (NOW INTEGRATED WITH BACKEND) ---
+        const registerForm = document.getElementById('register-form');
+        console.log('Register form element:', registerForm); // Debugging: Check if form is found
+        if (registerForm) {
+            registerForm.addEventListener('submit', handleRegister);
+            console.log('Register form submit event listener attached.'); // Debugging: Confirm listener attached
         }
 
-        function loadUserSession() {
-            const storedUser = JSON.parse(sessionStorage.getItem('currentUser'));
-            if (storedUser) {
-                currentUser = storedUser;
-                accountBalance = currentUser.balance;
-                investments = currentUser.investments || [];
-                depositHistory = currentUser.depositHistory || [];
-                withdrawHistory = currentUser.withdrawHistory || [];
-                updateUIForLoggedInUser();
-                showPage('home-page'); // Redirect to home after loading session
-                // Check for welcome bonus on initial login
-                if (currentUser.hasWelcomeBonus && !currentUser.bonusClaimed) {
-                    accountBalance += WELCOME_BONUS;
-                    currentUser.balance = accountBalance; // Update in current user object
-                    currentUser.bonusClaimed = true; // Mark as claimed
-                    sessionStorage.setItem('currentUser', JSON.stringify(currentUser)); // Update session
-                    updateBalanceDisplay();
-                    showWelcomeBonus();
-                }
-            } else {
-                showPage('login-page');
-            }
-        }
+        async function handleRegister(event) {
+            event.preventDefault(); // Prevent default form submission
+            console.log('handleRegister function called.'); // Debugging: Confirm function execution
 
-        function updateUIForLoggedInUser() {
-            if (currentUser) {
-                welcomeMessageDisplay.textContent = `Welcome, `;
-                welcomeMessageDisplay.style.opacity = 1; // Make welcome message visible
-                currentUsernameDisplay.textContent = currentUser.username;
-                currentUsernameDisplay.style.display = 'inline'; // Show username
-                balanceContainer.style.display = 'flex'; // Show balance container
-                logoutBtn.style.display = 'inline-block'; // Show logout button
-                updateBalanceDisplay();
-                updateReferralLink();
-                updateMyAccountDetails();
-                renderInvestments();
-                renderDepositHistory();
-                renderWithdrawHistory();
-                renderReferredUsers();
-                startAllInvestmentTimers(); // Start timers for active investments
-            } else {
-                welcomeMessageDisplay.style.opacity = 0; // Hide welcome message
-                currentUsernameDisplay.style.display = 'none'; // Hide username
-                balanceContainer.style.display = 'none'; // Hide balance container
-                logoutBtn.style.display = 'none'; // Hide logout button
-                // Clear any displayed user-specific data
-                accountBalanceDisplay.textContent = 'UGX 0.00';
-                myAccountUsernameDisplay.textContent = '';
-                myAccountEmailDisplay.textContent = '';
-                myAccountTelDisplay.textContent = '';
-                referralLinkDisplay.href = '#';
-                referralLinkDisplay.textContent = 'dailyearners.com/username';
-                clearTables();
-                clearIntervals();
-            }
-        }
-
-        function clearTables() {
-            depositHistoryTableBody.innerHTML = '';
-            withdrawHistoryTableBody.innerHTML = '';
-            activeInvestmentsTableBody.innerHTML = '';
-            referredUsersTableBody.innerHTML = '';
-        }
-
-        function clearIntervals() {
-            if (dailyTimerInterval) {
-                clearInterval(dailyTimerInterval);
-                dailyTimerInterval = null;
-            }
-            for (const key in investmentTimers) {
-                clearInterval(investmentTimers[key]);
-            }
-            investmentTimers = {};
-        }
-
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const username = loginForm.elements['login-username'].value.trim();
-            const password = loginForm.elements['login-password'].value.trim();
-
-            const user = users.find(u => u.username === username && u.password === password);
-
-            if (user) {
-                currentUser = user;
-                // Load user-specific data
-                accountBalance = currentUser.balance;
-                investments = currentUser.investments || [];
-                depositHistory = currentUser.depositHistory || [];
-                withdrawHistory = currentUser.withdrawHistory || [];
-
-                sessionStorage.setItem('currentUser', JSON.stringify(currentUser)); // Store in session
-
-                updateUIForLoggedInUser();
-                showPage('home-page');
-                alert('Login successful!');
-
-                // Check for welcome bonus on first login
-                if (currentUser.hasWelcomeBonus && !currentUser.bonusClaimed) {
-                    accountBalance += WELCOME_BONUS;
-                    currentUser.balance = accountBalance; // Update in current user object
-                    currentUser.bonusClaimed = true; // Mark as claimed
-                    sessionStorage.setItem('currentUser', JSON.stringify(currentUser)); // Update session
-                    updateBalanceDisplay();
-                    showWelcomeBonus();
-                }
-
-                // Clear login form
-                loginForm.reset();
-            } else {
-                alert('Invalid username or password.');
-            }
-        });
-
-        registrationForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const username = registrationForm.elements['reg-username'].value.trim();
-            const tel = registrationForm.elements['reg-tel'].value.trim();
-            const email = registrationForm.elements['reg-email'].value.trim();
-            const password = registrationForm.elements['reg-password'].value.trim();
-            const confirmPassword = registrationForm.elements['reg-confirm-password'].value.trim();
+            const username = document.getElementById('registerUsername').value.trim();
+            const email = document.getElementById('registerEmail').value.trim();
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const phone = document.getElementById('registerPhone').value.trim();
 
             if (password !== confirmPassword) {
                 alert('Passwords do not match!');
+                console.warn('Passwords do not match.'); // Debugging: Log password mismatch
                 return;
             }
 
-            if (users.some(u => u.username === username)) {
-                alert('Username already taken!');
-                return;
+            try {
+                console.log('Sending registration request to backend...'); // Debugging: Indicate fetch start
+                const response = await fetch(`${API_BASE_URL}/api/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, email, password, phone })
+                });
+
+                console.log('Received raw response from backend:', response); // Debugging: Show raw response object
+                const data = await response.json(); // Always attempt to parse JSON response
+                console.log('Parsed response data:', data); // Debugging: Show parsed data
+
+                if (response.ok) {
+                    alert(data.message || 'Registration successful. Please log in.');
+                    console.log('Registration success:', data);
+                    showPage('login-page'); // Redirect to login page
+                } else {
+                    // Handle backend-provided errors (e.g., email already registered)
+                    alert('Registration failed: ' + (data.message || 'An unknown error occurred.'));
+                    console.error('Registration error response:', data); // Debugging: Log backend error
+                }
+            } catch (error) {
+                console.error('Frontend Registration Fetch Error:', error); // Debugging: Log network/fetch error
+                alert('An error occurred during registration. Please try again later.');
             }
-            if (users.some(u => u.email === email)) {
-                alert('Email already registered!');
-                return;
-            }
-            if (users.some(u => u.tel === tel)) {
-                alert('Telephone number already registered!');
-                return;
-            }
-
-            const newUser = {
-                username,
-                tel,
-                email,
-                password, // In a real app, hash and salt passwords!
-                balance: 0,
-                investments: [],
-                depositHistory: [],
-                withdrawHistory: [],
-                referredUsers: [], // For tracking referrals made by this user
-                referralBonus: 0,
-                hasWelcomeBonus: true, // New users get bonus
-                bonusClaimed: false
-            };
-
-            users.push(newUser);
-            saveUsers();
-            alert('Registration successful! You can now log in.');
-            registrationForm.reset(); // Clear form
-            showPage('login-page');
-            // TODO: Make a call to backend for user registration
-        });
-
-        forgotPasswordForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = forgotPasswordForm.elements['forgot-email'].value.trim();
-            const userExists = users.some(u => u.email === email);
-
-            if (userExists) {
-                alert(`A password reset link has been sent to ${email}. (Simulation)`);
-                // TODO: In a real app, trigger backend to send an actual reset email
-                forgotPasswordForm.reset();
-                showPage('login-page');
-            } else {
-                alert('No account found with that email address.');
-            }
-        });
-
-        logoutBtn.addEventListener('click', () => {
-            currentUser = null;
-            sessionStorage.removeItem('currentUser'); // Clear session
-            updateUIForLoggedInUser();
-            showPage('login-page');
-            alert('You have been logged out.');
-        });
-
-        function showWelcomeBonus() {
-            welcomeBonusElement.style.display = 'block';
-            setTimeout(() => {
-                welcomeBonusElement.style.display = 'none';
-            }, 5000); // Hide after 5 seconds
         }
 
-        // --- Balance Management ---
-        function updateBalanceDisplay() {
-            accountBalanceDisplay.textContent = `UGX ${accountBalance.toLocaleString('en-UG')}`;
-            if (currentUser) {
-                currentUser.balance = accountBalance;
+
+        // --- User Login (Still Local Storage, to be updated next) ---
+        const loginForm = document.getElementById('login-form');
+        if (loginForm) {
+            loginForm.addEventListener('submit', handleLogin);
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            // This logic still uses localStorage for users, will be updated for backend login
+            const user = users.find(u => u.email === email && u.password === password);
+
+            if (user) {
+                currentUser = user;
                 sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
-                // Also update the stored user in `users` array for persistence
-                const userIndex = users.findIndex(u => u.username === currentUser.username);
-                if (userIndex !== -1) {
-                    users[userIndex].balance = accountBalance;
-                    users[userIndex].investments = investments;
-                    users[userIndex].depositHistory = depositHistory;
-                    users[userIndex].withdrawHistory = withdrawHistory;
-                    users[userIndex].referredUsers = currentUser.referredUsers; // Ensure referrals are also updated
-                    users[userIndex].referralBonus = currentUser.referralBonus;
-                    users[userIndex].bonusClaimed = currentUser.bonusClaimed;
-                    saveUsers();
-                }
+                updateAuthButtons();
+                alert('Login successful!');
+                showPage('my-account-page');
+            } else {
+                alert('Invalid email or password.');
             }
         }
 
-        // --- Investment Packages ---
-        document.querySelectorAll('.package-card .apply-btn').forEach(button => {
-            button.addEventListener('click', (e) => {
-                if (!currentUser) {
-                    alert('Please log in to apply for an investment package.');
-                    showPage('login-page');
-                    return;
-                }
 
-                const packageCard = e.target.closest('.package-card');
-                const packageName = packageCard.dataset.name;
-                const minAmount = parseInt(packageCard.dataset.min);
-                const maxAmount = parseInt(packageCard.dataset.max);
-                const dailyEarningRate = parseFloat(packageCard.dataset.earning) / 100; // Convert to decimal
+        // --- Dashboard and Account Details Update ---
+        function updateBalanceDisplay() {
+            accountBalanceDisplay.textContent = accountBalance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            totalEarningsDisplay.textContent = calculateTotalEarnings().toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            myAccountActiveInvestments.textContent = investments.filter(inv => inv.isActive).length;
+            totalProfitDisplay.textContent = calculateTotalProfit().toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            if (currentUser) {
+                referralCodeDisplay.textContent = currentUser.referralCode || 'N/A';
+                referralLinkInput.value = `${window.location.origin}${window.location.pathname}?ref=${currentUser.referralCode || ''}`;
+            }
+        }
 
-                let amountInput = prompt(`Enter amount to invest for ${packageName} (UGX ${minAmount.toLocaleString()} - UGX ${maxAmount.toLocaleString()}):`);
-                let amount = parseFloat(amountInput);
+        function calculateTotalEarnings() {
+            // This is a local simulation. In a real app, this would come from the backend.
+            return investments.reduce((sum, inv) => sum + inv.totalEarned, 0) + (currentUser ? currentUser.balance : 0);
+        }
 
-                if (isNaN(amount) || amount < minAmount || amount > maxAmount) {
-                    alert(`Invalid amount. Please enter an amount between UGX ${minAmount.toLocaleString()} and UGX ${maxAmount.toLocaleString()}.`);
-                    return;
-                }
+        function calculateTotalProfit() {
+            // This is a local simulation. In a real app, this would come from the backend.
+            return investments.reduce((sum, inv) => sum + (inv.totalEarned - inv.investedAmount), 0);
+        }
 
-                if (accountBalance < amount) {
-                    alert('Insufficient balance. Please deposit funds first.');
-                    showPage('deposit-page');
-                    return;
-                }
+        function copyReferralLink() {
+            referralLinkInput.select();
+            referralLinkInput.setSelectionRange(0, 99999); // For mobile devices
+            document.execCommand('copy');
+            alert('Referral link copied to clipboard!');
+        }
 
-                if (confirm(`Confirm investment of UGX ${amount.toLocaleString()} in ${packageName}?`)) {
-                    accountBalance -= amount;
-                    const investment = {
-                        id: Date.now(), // Unique ID for the investment
-                        packageName: packageName,
-                        investedAmount: amount,
-                        dailyEarningRate: dailyEarningRate,
-                        startDate: new Date().toISOString(),
-                        endDate: new Date(Date.now() + 21 * 24 * 60 * 60 * 1000).toISOString(), // 21 days from now
-                        daysRemaining: 21,
-                        currentDayEarnings: 0,
-                        totalEarned: 0,
-                        isActive: true,
-                        lastEarningUpdate: new Date().toISOString() // Track last earning update
-                    };
-                    investments.push(investment);
-                    updateBalanceDisplay();
-                    renderInvestments(); // Update investments table
-                    startInvestmentTimer(investment); // Start individual timer
-                    alert(`Successfully invested UGX ${amount.toLocaleString()} in ${packageName}!`);
-                    // TODO: Make a call to backend to record investment
-                }
-            });
-        });
 
-        function renderInvestments() {
-            activeInvestmentsTableBody.innerHTML = '';
-            if (!currentUser || investments.length === 0) {
-                const row = activeInvestmentsTableBody.insertRow();
-                const cell = row.insertCell(0);
-                cell.colSpan = 6;
-                cell.textContent = 'No active investments.';
-                cell.style.textAlign = 'center';
-                cell.style.color = 'var(--secondary-color)';
+        // --- Investment Packages (Fetched from Backend) ---
+        async function fetchAndRenderPackages() {
+            const packagesContainer = document.querySelector('#investment-packages-page .packages-grid');
+            if (!packagesContainer) {
+                console.error("Error: '#investment-packages-page .packages-grid' container not found.");
                 return;
             }
 
-            investments.forEach(inv => {
-                const row = activeInvestmentsTableBody.insertRow();
-                row.insertCell(0).textContent = inv.packageName;
-                row.insertCell(1).textContent = `UGX ${inv.investedAmount.toLocaleString()}`;
-                row.insertCell(2).textContent = `${(inv.dailyEarningRate * 100)}%`;
-                const daysRemainingCell = row.insertCell(3);
-                daysRemainingCell.textContent = `${inv.daysRemaining} Days`;
-                const dailyTimerCell = row.insertCell(4);
-                dailyTimerCell.id = `timer-${inv.id}`;
-                dailyTimerCell.textContent = 'Loading...';
-                row.insertCell(5).textContent = inv.isActive ? 'Active' : 'Completed';
-            });
-        }
+            packagesContainer.innerHTML = '<h3 style="color: var(--primary-color); text-align: center;">Loading Investment Packages...</h3><p style="color: var(--text-color); text-align: center;">Please ensure your Node.js backend server is running and accessible.</p>';
 
-        function startAllInvestmentTimers() {
-            for (const key in investmentTimers) {
-                clearInterval(investmentTimers[key]); // Clear any existing timers
-            }
-            investmentTimers = {}; // Reset the object
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/packages`);
 
-            investments.forEach(inv => {
-                if (inv.isActive) {
-                    startInvestmentTimer(inv);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status} - ${response.statusText}. Check backend server logs.`);
                 }
+
+                const data = await response.json();
+
+                packagesContainer.innerHTML = ''; // Clear loading message
+
+                if (data.length === 0) {
+                    packagesContainer.innerHTML = '<p style="color: var(--secondary-color); text-align: center;">No investment packages available at the moment.</p>';
+                    return;
+                }
+
+                data.forEach(pkg => {
+                    const packageName = pkg["name"] ? pkg["name"].trim() : 'N/A';
+                    const minInvestment = parseFloat(pkg["min_investment_ugx"] || 0);
+                    const maxInvestment = pkg["max_investment_ugx"] ? parseFloat(pkg["max_investment_ugx"]) : null;
+                    const dailyRoi = parseFloat(pkg["daily_roi_percentage"] || 0);
+                    const durationDays = parseInt(pkg["duration_days"] || 0);
+
+                    const packageCard = document.createElement('div');
+                    packageCard.className = 'package-card';
+                    packageCard.dataset.min = minInvestment;
+                    packageCard.dataset.max = maxInvestment || '';
+                    packageCard.dataset.earning = dailyRoi;
+                    packageCard.dataset.name = packageName;
+                    packageCard.dataset.duration = durationDays;
+
+                    packageCard.innerHTML = `
+                        <h3>${packageName}</h3>
+                        <p class="investment-range">UGX ${minInvestment.toLocaleString()} ${maxInvestment ? `- UGX ${maxInvestment.toLocaleString()}` : ''}</p>
+                        <p class="daily-earning">Daily Earning: ${dailyRoi}%</p>
+                        <p class="duration">Duration: ${durationDays} Days</p>
+                        <button class="apply-btn sparkle-effect">Apply Now</button>
+                    `;
+                    packagesContainer.appendChild(packageCard);
+                });
+
+                attachApplyButtonListeners();
+
+            } catch (error) {
+                console.error('Error fetching investment packages:', error);
+                packagesContainer.innerHTML = `<p style="color: var(--danger-color); text-align: center;">Failed to load investment packages: ${error.message}. Please check your backend URL and server status.</p>`;
+            }
+        }
+
+        // --- Investment Application (Frontend Trigger) ---
+        function attachApplyButtonListeners() {
+            document.querySelectorAll('.package-card .apply-btn').forEach(button => {
+                button.removeEventListener('click', handleApplyButtonClick);
+                button.addEventListener('click', handleApplyButtonClick);
             });
         }
 
-        function startInvestmentTimer(investment) {
-            const timerCell = document.getElementById(`timer-${investment.id}`);
-            if (!timerCell) return;
+        async function handleApplyButtonClick(e) {
+            if (!currentUser) {
+                alert('Please log in to apply for an investment package.');
+                showPage('login-page');
+                return;
+            }
 
-            // Clear existing timer if it exists for this investment
+            const packageCard = e.target.closest('.package-card');
+            const packageName = packageCard.dataset.name;
+            const minAmount = parseFloat(packageCard.dataset.min);
+            const maxAmount = parseFloat(packageCard.dataset.max);
+            const dailyEarningRate = parseFloat(packageCard.dataset.earning);
+            const durationDays = parseInt(packageCard.dataset.duration);
+
+            let amountInput = prompt(`Enter amount to invest for ${packageName} (UGX ${minAmount.toLocaleString()} - UGX ${maxAmount.toLocaleString() || 'Unlimited'}):`);
+            let amount = parseFloat(amountInput);
+
+            if (isNaN(amount) || amount < minAmount || (maxAmount && amount > maxAmount)) {
+                alert(`Invalid amount. Please enter an amount between UGX ${minAmount.toLocaleString()} and UGX ${maxAmount ? maxAmount.toLocaleString() : 'the maximum allowed'}.`);
+                return;
+            }
+
+            if (accountBalance < amount) {
+                alert('Insufficient balance. Please deposit funds first.');
+                showPage('deposit-page');
+                return;
+            }
+
+            if (confirm(`Confirm investment of UGX ${amount.toLocaleString()} in ${packageName}?`)) {
+                // TODO: Send this investment data to your backend
+                // Example of how you would send to backend (requires backend /api/invest endpoint)
+                /*
+                try {
+                    const response = await fetch(`${API_BASE_URL}/api/invest`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${currentUser.token}` // Assuming you get a token on login
+                        },
+                        body: JSON.stringify({
+                            userId: currentUser.id,
+                            packageName: packageName,
+                            investedAmount: amount,
+                            dailyEarningRate: dailyEarningRate,
+                            durationDays: durationDays
+                        })
+                    });
+
+                    const result = await response.json();
+
+                    if (response.ok) {
+                        accountBalance -= amount;
+                        currentUser.balance = accountBalance;
+                        sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+                        updateBalanceDisplay();
+                        // Assuming backend returns updated investments or you refetch them
+                        // investments.push(result.newInvestment); // Or refetch all investments
+                        renderInvestments();
+                        alert(`Successfully invested UGX ${amount.toLocaleString()} in ${packageName}!`);
+                    } else {
+                        alert(`Investment failed: ${result.message || 'An unknown error occurred.'}`);
+                    }
+                } catch (error) {
+                    console.error('Error during investment:', error);
+                    alert(`Failed to process investment. Please try again. Error: ${error.message}`);
+                }
+                */
+
+                // For now, local simulation continues until backend is fully implemented for investments
+                accountBalance -= amount;
+                const investment = {
+                    id: Date.now(),
+                    packageName: packageName,
+                    investedAmount: amount,
+                    dailyEarningRate: dailyEarningRate / 100, // Convert to decimal for local calc
+                    startDate: new Date().toISOString(),
+                    endDate: new Date(Date.now() + durationDays * 24 * 60 * 60 * 1000).toISOString(),
+                    daysRemaining: durationDays,
+                    currentDayEarnings: 0,
+                    totalEarned: 0,
+                    isActive: true,
+                    lastEarningUpdate: new Date().toISOString()
+                };
+                investments.push(investment);
+                currentUser.balance = accountBalance;
+                currentUser.investments = investments;
+                sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+                updateBalanceDisplay();
+                renderInvestments();
+                startInvestmentTimer(investment); // Start individual timer for simulation
+                alert(`Successfully invested UGX ${amount.toLocaleString()} in ${packageName}!`);
+            }
+        }
+
+
+        // --- Investment Management (Simulation for now) ---
+        function renderInvestments() {
+            myInvestmentsTableBody.innerHTML = '';
+            if (investments.length === 0) {
+                myInvestmentsTableBody.innerHTML = '<tr><td colspan="8" class="text-center">No active investments. Start investing today!</td></tr>';
+                return;
+            }
+            investments.forEach(inv => {
+                const row = myInvestmentsTableBody.insertRow();
+                row.innerHTML = `
+                    <td>${inv.packageName}</td>
+                    <td>UGX ${inv.investedAmount.toLocaleString()}</td>
+                    <td>${(inv.dailyEarningRate * 100).toFixed(2)}%</td>
+                    <td>${inv.durationDays} Days</td>
+                    <td>UGX ${inv.currentDayEarnings.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                    <td>UGX ${inv.totalEarned.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                    <td><span class="status-badge ${inv.isActive ? 'active' : 'completed'}">${inv.isActive ? 'Active' : 'Completed'}</span></td>
+                    <td><span class="next-earning-timer" data-investment-id="${inv.id}">Calculating...</span></td>
+                `;
+            });
+        }
+
+        // --- Timers (Simulation for now) ---
+        let dailyTimerInterval;
+        let investmentTimers = {};
+
+        function updateAccountDetails() {
+            if (currentUser) {
+                accountBalance = currentUser.balance || 0;
+                investments = currentUser.investments || [];
+                depositHistory = currentUser.depositHistory || [];
+                withdrawHistory = currentUser.withdrawHistory || [];
+                updateBalanceDisplay();
+                renderInvestments();
+                renderDepositHistory();
+                renderWithdrawHistory();
+            }
+        }
+
+        // Simulates daily earning for individual investment
+        function startInvestmentTimer(investment) {
+            const timerElement = document.querySelector(`.next-earning-timer[data-investment-id="${investment.id}"]`);
+            if (!timerElement) return;
+
+            let timeLeft = 24 * 60 * 60; // 24 hours in seconds for simulation
+
             if (investmentTimers[investment.id]) {
                 clearInterval(investmentTimers[investment.id]);
             }
 
-            const updateTimer = () => {
-                const now = new Date();
-                const lastUpdate = new Date(investment.lastEarningUpdate);
-                const elapsedHours = (now - lastUpdate) / (1000 * 60 * 60);
-
-                // Calculate time until next 24-hour cycle completes from last update
-                const msUntilNextUpdate = (24 - (elapsedHours % 24)) * 60 * 60 * 1000;
-
-                let hours = Math.floor(msUntilNextUpdate / (1000 * 60 * 60));
-                let minutes = Math.floor((msUntilNextUpdate % (1000 * 60 * 60)) / (1000 * 60));
-                let seconds = Math.floor((msUntilNextUpdate % (1000 * 60)) / 1000);
-
-                if (hours < 0 || minutes < 0 || seconds < 0) { // If past 24 hours, reset timer and process earnings
-                    hours = 0;
-                    minutes = 0;
-                    seconds = 0;
-                }
-
-                timerCell.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-
-                // Check if a full 24-hour cycle has passed
-                if (elapsedHours >= 24) {
-                    processDailyEarning(investment);
-                }
-
-                // Check if 21 days are over
-                const endDate = new Date(investment.endDate);
-                const remainingDays = Math.ceil((endDate - now) / (1000 * 60 * 60 * 24));
-                investment.daysRemaining = Math.max(0, remainingDays);
-                const daysRemainingCell = timerCell.previousElementSibling; // Assuming daysRemaining is previous cell
-                if (daysRemainingCell) {
-                    daysRemainingCell.textContent = `${investment.daysRemaining} Days`;
-                }
-
-                if (investment.daysRemaining <= 0) {
-                    investment.isActive = false;
-                    timerCell.textContent = 'Completed!';
-                    clearInterval(investmentTimers[investment.id]);
-                    delete investmentTimers[investment.id];
-                    // Update the status in the table
-                    const statusCell = timerCell.nextElementSibling;
-                    if (statusCell) statusCell.textContent = 'Completed';
-                }
-                updateBalanceDisplay(); // Re-save user data
-            };
-
-            investmentTimers[investment.id] = setInterval(updateTimer, 1000);
-            updateTimer(); // Call immediately to avoid initial delay
-        }
-
-        function processDailyEarning(investment) {
-            if (!investment.isActive) return;
-
-            const now = new Date();
-            const lastUpdate = new Date(investment.lastEarningUpdate);
-
-            // Calculate how many full 24-hour cycles have passed since last update
-            const msSinceLastUpdate = now - lastUpdate;
-            const fullCycles = Math.floor(msSinceLastUpdate / (24 * 60 * 60 * 1000));
-
-            if (fullCycles > 0) {
-                const dailyProfit = investment.investedAmount * investment.dailyEarningRate;
-                const earnedThisPeriod = dailyProfit * fullCycles;
-
-                accountBalance += earnedThisPeriod;
-                investment.totalEarned += earnedThisPeriod;
-
-                // Update last earning update time for the next cycle
-                investment.lastEarningUpdate = new Date(lastUpdate.getTime() + fullCycles * 24 * 60 * 60 * 1000).toISOString();
-                updateBalanceDisplay();
-            }
-        }
-
-
-        // --- Deposit Functionality ---
-        function promptDepositAmount(method) {
-            if (!currentUser) {
-                alert('Please log in to deposit funds.');
-                showPage('login-page');
-                return;
-            }
-
-            let amountInput = prompt(`Enter amount to deposit via ${method} (UGX ${MIN_DEPOSIT.toLocaleString()} - UGX ${MAX_DEPOSIT.toLocaleString()}):`);
-            let amount = parseFloat(amountInput);
-
-            if (isNaN(amount) || amount < MIN_DEPOSIT || amount > MAX_DEPOSIT) {
-                alert(`Invalid deposit amount. Please enter an amount between UGX ${MIN_DEPOSIT.toLocaleString()} and UGX ${MAX_DEPOSIT.toLocaleString()}.`);
-                return;
-            }
-
-            if (confirm(`Confirm deposit of UGX ${amount.toLocaleString()} via ${method} to KISAKYE REAGAN (0746160623)?`)) {
-                // Simulate deposit
-                accountBalance += amount;
-                depositHistory.push({
-                    date: new Date().toLocaleString(),
-                    amount: amount,
-                    method: method,
-                    status: 'Completed'
-                });
-                updateBalanceDisplay();
-                renderDepositHistory();
-                alert(`Successfully deposited UGX ${amount.toLocaleString()}! Your balance is now UGX ${accountBalance.toLocaleString()}.`);
-                // TODO: In a real app, integrate with payment gateway/mobile money API
-            }
-        }
-
-        function renderDepositHistory() {
-            depositHistoryTableBody.innerHTML = '';
-            if (!currentUser || depositHistory.length === 0) {
-                const row = depositHistoryTableBody.insertRow();
-                const cell = row.insertCell(0);
-                cell.colSpan = 4;
-                cell.textContent = 'No deposit history.';
-                cell.style.textAlign = 'center';
-                cell.style.color = 'var(--secondary-color)';
-                return;
-            }
-            depositHistory.forEach(entry => {
-                const row = depositHistoryTableBody.insertRow();
-                row.insertCell(0).textContent = entry.date;
-                row.insertCell(1).textContent = `UGX ${entry.amount.toLocaleString()}`;
-                row.insertCell(2).textContent = entry.method;
-                row.insertCell(3).textContent = entry.status;
-                row.cells[3].style.color = entry.status === 'Completed' ? 'var(--accent-color)' : 'var(--danger-color)';
-            });
-        }
-
-
-        // --- Withdraw Functionality ---
-        withdrawForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            if (!currentUser) {
-                alert('Please log in to withdraw funds.');
-                showPage('login-page');
-                return;
-            }
-
-            const amount = parseFloat(withdrawForm.elements['withdraw-amount'].value);
-            const method = withdrawForm.elements['withdraw-method'].value;
-            const target = withdrawForm.elements['withdraw-number'].value.trim();
-
-            if (isNaN(amount) || amount < MIN_WITHDRAW || amount > MAX_DEPOSIT) {
-                alert(`Invalid withdraw amount. Please enter an amount between UGX ${MIN_WITHDRAW.toLocaleString()} and UGX ${MAX_DEPOSIT.toLocaleString()}.`);
-                return;
-            }
-            if (accountBalance < amount) {
-                alert('Insufficient balance for withdrawal.');
-                return;
-            }
-            if (!method) {
-                alert('Please select a withdrawal method.');
-                return;
-            }
-            if (!target) {
-                alert('Please provide your mobile number or Binance wallet address.');
-                return;
-            }
-
-            if (confirm(`Confirm withdrawal of UGX ${amount.toLocaleString()} to ${target} via ${method}?`)) {
-                accountBalance -= amount;
-                withdrawHistory.push({
-                    date: new Date().toLocaleString(),
-                    amount: amount,
-                    method: method,
-                    target: target,
-                    status: 'Pending',
-                    adminApproval: 'Pending'
-                });
-                updateBalanceDisplay();
-                renderWithdrawHistory();
-                alert(`Withdrawal request for UGX ${amount.toLocaleString()} submitted. It is pending admin approval.`);
-                withdrawForm.reset();
-                // TODO: Send withdrawal request to backend for admin approval
-            }
-        });
-
-        function renderWithdrawHistory() {
-            withdrawHistoryTableBody.innerHTML = '';
-            if (!currentUser || withdrawHistory.length === 0) {
-                const row = withdrawHistoryTableBody.insertRow();
-                const cell = row.insertCell(0);
-                cell.colSpan = 5;
-                cell.textContent = 'No withdrawal history.';
-                cell.style.textAlign = 'center';
-                cell.style.color = 'var(--secondary-color)';
-                return;
-            }
-            withdrawHistory.forEach(entry => {
-                const row = withdrawHistoryTableBody.insertRow();
-                row.insertCell(0).textContent = entry.date;
-                row.insertCell(1).textContent = `UGX ${entry.amount.toLocaleString()}`;
-                row.insertCell(2).textContent = entry.method;
-                const statusCell = row.insertCell(3);
-                statusCell.textContent = entry.status;
-                statusCell.style.color = entry.status === 'Completed' ? 'var(--accent-color)' : (entry.status === 'Pending' ? 'var(--secondary-color)' : 'var(--danger-color)');
-                const approvalCell = row.insertCell(4);
-                approvalCell.textContent = entry.adminApproval;
-                approvalCell.style.color = entry.adminApproval === 'Approved' ? 'var(--accent-color)' : (entry.adminApproval === 'Pending' ? 'var(--secondary-color)' : 'var(--danger-color)');
-            });
-        }
-
-        // --- My Account Details ---
-        function updateMyAccountDetails() {
-            if (currentUser) {
-                myAccountUsernameDisplay.textContent = currentUser.username;
-                myAccountEmailDisplay.textContent = currentUser.email;
-                myAccountTelDisplay.textContent = currentUser.tel;
-            }
-        }
-
-        // --- Referral Page ---
-        function updateReferralLink() {
-            if (currentUser) {
-                const referralUrl = `dailyearners.com/${currentUser.username.toLowerCase().replace(/\s/g, '')}`;
-                referralLinkDisplay.href = `https://${referralUrl}`; // Simulate clickable link
-                referralLinkDisplay.textContent = referralUrl;
-            }
-        }
-
-        function copyReferralLink() {
-            if (currentUser) {
-                const referralText = referralLinkDisplay.textContent;
-                navigator.clipboard.writeText(referralText).then(() => {
-                    alert('Referral link copied to clipboard!');
-                }).catch(err => {
-                    console.error('Failed to copy text: ', err);
-                });
-            } else {
-                alert('Please log in to get your referral link.');
-            }
-        }
-
-        function renderReferredUsers() {
-            referredUsersTableBody.innerHTML = '';
-            if (!currentUser || currentUser.referredUsers.length === 0) {
-                const row = referredUsersTableBody.insertRow();
-                const cell = row.insertCell(0);
-                cell.colSpan = 4;
-                cell.textContent = 'No referrals yet. Share your link to earn!';
-                cell.style.textAlign = 'center';
-                cell.style.color = 'var(--secondary-color)';
-                return;
-            }
-
-            currentUser.referredUsers.forEach(ref => {
-                const row = referredUsersTableBody.insertRow();
-                row.insertCell(0).textContent = ref.username;
-                row.insertCell(1).textContent = `UGX ${ref.investedAmount.toLocaleString()}`;
-                row.insertCell(2).textContent = `UGX ${ref.bonusEarned.toLocaleString()}`;
-                row.insertCell(3).textContent = ref.status; // e.g., 'Earned', 'Pending'
-            });
-        }
-
-        // --- Initial Load ---
-        document.addEventListener('DOMContentLoaded', () => {
-            loadUserSession();
-            // Default to home page if not logged in or no session
-            if (!currentUser) {
-                showPage('home-page'); // Show home page initially for non-logged-in users
-            }
-            // Auto clear form fields when page loads (useful if browser auto-fills)
-            document.querySelectorAll('input').forEach(input => {
-                if (input.type !== 'hidden') input.value = '';
-            });
-        });
-
-        // Add dummy referral data for a logged-in user if not present
-        if (currentUser && currentUser.referredUsers.length === 0) {
-            currentUser.referredUsers.push(
-                { username: 'ReferralUser1', investedAmount: 50000, bonusEarned: 5000, status: 'Earned' },
-                { username: 'ReferralUser2', investedAmount: 15000, bonusEarned: 1500, status: 'Earned' },
-                { username: 'ReferralUser3', investedAmount: 200000, bonusEarned: 20000, status: 'Earned' }
-            );
-            currentUser.referralBonus = currentUser.referredUsers.reduce((sum, r) => sum + r.bonusEarned, 0);
-            updateBalanceDisplay(); // Update balance to reflect bonus
-            renderReferredUsers();
-        }
-
-        // Simulate daily timer for "My Account" page (conceptual, not tied to real earnings)
-        // This timer is independent of investment package timers.
-        function startDailyTimer() {
-            const timerElement = document.getElementById('daily-timer');
-            if (!timerElement) return;
-
-            let timeLeft = 24 * 60 * 60; // 24 hours in seconds
-
-            if (dailyTimerInterval) {
-                clearInterval(dailyTimerInterval);
-            }
-
-            dailyTimerInterval = setInterval(() => {
+            investmentTimers[investment.id] = setInterval(() => {
                 let hours = Math.floor(timeLeft / 3600);
                 let minutes = Math.floor((timeLeft % 3600) / 60);
                 let seconds = timeLeft % 60;
@@ -2048,24 +1355,163 @@
                 timerElement.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 
                 if (timeLeft <= 0) {
-                    clearInterval(dailyTimerInterval);
-                    timerElement.textContent = 'Updating earnings...';
-                    timeLeft = 24 * 60 * 60; // Reset for next cycle (simulation)
-                    // In a real app, this would trigger daily earning calculation for all active investments
-                    // and then restart the timer from 24 hours.
-                    setTimeout(() => startDailyTimer(), 5000); // Restart after a short delay
+                    clearInterval(investmentTimers[investment.id]);
+                    timerElement.textContent = 'Updating...';
+                    // Simulate daily earning
+                    if (investment.isActive && investment.daysRemaining > 0) {
+                        const dailyProfit = investment.investedAmount * investment.dailyEarningRate;
+                        investment.currentDayEarnings = dailyProfit;
+                        investment.totalEarned += dailyProfit;
+                        investment.daysRemaining--;
+
+                        accountBalance += dailyProfit; // Add to user's balance
+                        currentUser.balance = accountBalance; // Update current user
+                        currentUser.investments = investments; // Update investments array
+                        sessionStorage.setItem('currentUser', JSON.stringify(currentUser)); // Save to session storage
+
+                        updateBalanceDisplay();
+                        renderInvestments(); // Re-render to show updated earnings
+                        alert(`UGX ${dailyProfit.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} earned from ${investment.packageName}!`);
+
+                        if (investment.daysRemaining === 0) {
+                            investment.isActive = false; // Mark as completed
+                            alert(`Investment ${investment.packageName} completed! Total earned: UGX ${investment.totalEarned.toLocaleString()}`);
+                        }
+                    }
+
+                    timeLeft = 24 * 60 * 60; // Reset for next cycle
+                    if (investment.isActive) {
+                        setTimeout(() => startInvestmentTimer(investment), 1000); // Restart for next day
+                    } else {
+                        timerElement.textContent = 'Completed';
+                    }
                 }
                 timeLeft--;
             }, 1000);
         }
 
-        // Call this when the 'My Account' page is shown or when a user logs in
-        // For this unified file, we'll start it once if a user is logged in
-        if (currentUser) {
-             // We are now using individual investment timers, so this is less critical.
-             // Keep for general dashboard aesthetic if needed.
-             // startDailyTimer();
+        // --- Deposit Functionality (Simulation for now) ---
+        function promptDepositAmount(method) {
+            if (!currentUser) {
+                alert('Please log in to deposit funds.');
+                showPage('login-page');
+                return;
+            }
+            let amountInput = prompt(`Enter amount to deposit via ${method} (UGX ${MIN_DEPOSIT.toLocaleString()} - UGX ${MAX_DEPOSIT.toLocaleString()}):`);
+            let amount = parseFloat(amountInput);
+
+            if (isNaN(amount) || amount < MIN_DEPOSIT || amount > MAX_DEPOSIT) {
+                alert(`Invalid amount. Please enter an amount between UGX ${MIN_DEPOSIT.toLocaleString()} and UGX ${MAX_DEPOSIT.toLocaleString()}.`);
+                return;
+            }
+
+            if (confirm(`Confirm deposit of UGX ${amount.toLocaleString()} via ${method}?`)) {
+                const deposit = {
+                    date: new Date().toLocaleString(),
+                    amount: amount,
+                    method: method,
+                    status: 'Pending' // Or 'Completed' if instant
+                };
+                depositHistory.push(deposit);
+                accountBalance += amount; // Simulate instant addition
+                currentUser.balance = accountBalance;
+                currentUser.depositHistory = depositHistory;
+                sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+                updateBalanceDisplay();
+                renderDepositHistory();
+                alert(`Deposit of UGX ${amount.toLocaleString()} via ${method} is ${deposit.status}!`);
+                // TODO: Send deposit request to backend
+            }
         }
+
+        function renderDepositHistory() {
+            depositHistoryTableBody.innerHTML = '';
+            if (depositHistory.length === 0) {
+                depositHistoryTableBody.innerHTML = '<tr><td colspan="4" class="text-center">No deposit history.</td></tr>';
+                return;
+            }
+            depositHistory.forEach(dep => {
+                const row = depositHistoryTableBody.insertRow();
+                row.innerHTML = `
+                    <td>${dep.date}</td>
+                    <td>UGX ${dep.amount.toLocaleString()}</td>
+                    <td>${dep.method}</td>
+                    <td>${dep.status}</td>
+                `;
+            });
+        }
+
+        // --- Withdrawal Functionality (Simulation for now) ---
+        const withdrawForm = document.getElementById('withdraw-form');
+        if (withdrawForm) {
+            withdrawForm.addEventListener('submit', handleWithdraw);
+        }
+
+        function handleWithdraw(event) {
+            event.preventDefault();
+            if (!currentUser) {
+                alert('Please log in to withdraw funds.');
+                showPage('login-page');
+                return;
+            }
+
+            const amount = parseFloat(document.getElementById('withdrawAmount').value);
+            const method = document.getElementById('withdrawMethod').value;
+            const account = document.getElementById('withdrawAccount').value;
+
+            if (isNaN(amount) || amount < MIN_WITHDRAW || amount > accountBalance) {
+                alert(`Invalid amount. Please enter an amount between UGX ${MIN_WITHDRAW.toLocaleString()} and your balance (UGX ${accountBalance.toLocaleString()}).`);
+                return;
+            }
+
+            if (confirm(`Confirm withdrawal of UGX ${amount.toLocaleString()} to ${account} via ${method}?`)) {
+                const withdrawal = {
+                    date: new Date().toLocaleString(),
+                    amount: amount,
+                    method: method,
+                    account: account,
+                    status: 'Pending'
+                };
+                withdrawHistory.push(withdrawal);
+                accountBalance -= amount; // Simulate instant deduction
+                currentUser.balance = accountBalance;
+                currentUser.withdrawHistory = withdrawHistory;
+                sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+                updateBalanceDisplay();
+                renderWithdrawHistory();
+                alert(`Withdrawal of UGX ${amount.toLocaleString()} is ${withdrawal.status}!`);
+                // TODO: Send withdrawal request to backend
+                withdrawForm.reset();
+            }
+        }
+
+        function renderWithdrawHistory() {
+            withdrawHistoryTableBody.innerHTML = '';
+            if (withdrawHistory.length === 0) {
+                withdrawHistoryTableBody.innerHTML = '<tr><td colspan="4" class="text-center">No withdrawal history.</td></tr>';
+                return;
+            }
+            withdrawHistory.forEach(wd => {
+                const row = withdrawHistoryTableBody.insertRow();
+                row.innerHTML = `
+                    <td>${wd.date}</td>
+                    <td>UGX ${wd.amount.toLocaleString()}</td>
+                    <td>${wd.method}</td>
+                    <td>${wd.status}</td>
+                `;
+            });
+        }
+
+        // --- Initial Load ---
+        // Ensure this is the last thing executed in the script block
+        document.addEventListener('DOMContentLoaded', () => {
+            updateAuthButtons();
+            showPage('home-page'); // Default page on load
+            // Start timers for existing investments if user is logged in
+            if (currentUser && investments.length > 0) {
+                investments.forEach(inv => startInvestmentTimer(inv));
+            }
+        });
 
     </script>
 </body>
