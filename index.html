@@ -855,6 +855,7 @@
                 <h3>Referral Program</h3>
                 <p>Share your unique referral code to earn bonuses!</p>
                 <p>Your Referral Code: <strong id="referralCodeDisplay">N/A</strong></p>
+                <!-- This input field is where the full referral link should appear -->
                 <input type="text" id="referralLink" readonly style="width: calc(100% - 20px); padding: 10px; margin-top: 10px; background-color: #3f3e5e; color: var(--text-color); border: 1px solid var(--border-color); border-radius: 5px;">
                 <button onclick="copyReferralLink()" style="margin-top: 10px; padding: 10px 15px; background-color: var(--accent-color); color: white; border: none; border-radius: 5px; cursor: pointer;">Copy Link</button>
             </div>
@@ -942,7 +943,7 @@
         const depositHistoryTableBody = document.querySelector('#deposit-history-table tbody');
         const withdrawHistoryTableBody = document.querySelector('#withdraw-history-table tbody');
         const referralCodeDisplay = document.getElementById('referralCodeDisplay');
-        const referralLinkInput = document.getElementById('referralLink');
+        const referralLinkInput = document.getElementById('referralLink'); // Get the referral link input element
 
         // --- Page Navigation ---
         function showPage(pageId) {
@@ -959,7 +960,7 @@
             if (pageId === 'investment-packages-page') {
                 fetchAndRenderPackages();
             } else if (pageId === 'my-account-page') {
-                updateAccountDetails();
+                updateAccountDetails(); // Ensure account details are updated on page load
                 renderInvestments();
                 renderDepositHistory();
                 renderWithdrawHistory();
@@ -1135,10 +1136,24 @@
             totalEarningsDisplay.textContent = calculateTotalEarnings().toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             myAccountActiveInvestments.textContent = investments.filter(inv => inv.isActive).length;
             totalProfitDisplay.textContent = calculateTotalProfit().toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            console.log('--- Debugging Referral Link ---'); // Debugging: Start section
+            console.log('currentUser object:', currentUser); // Debugging: Log the current user object
+
             if (currentUser) {
+                console.log('currentUser.referralCode:', currentUser.referralCode); // Debugging: Log the referral code itself
                 referralCodeDisplay.textContent = currentUser.referralCode || 'N/A';
-                referralLinkInput.value = `${window.location.origin}${window.location.pathname}?ref=${currentUser.referralCode || ''}`;
+                const generatedReferralLink = `${window.location.origin}${window.location.pathname}?ref=${currentUser.referralCode || ''}`; // Correctly generate the URL
+                referralLinkInput.value = generatedReferralLink; // Assign to the input field
+                console.log('Generated Referral Link:', generatedReferralLink); // Debugging: Log the full generated link
+                console.log('referralLinkInput element:', referralLinkInput); // Debugging: Log the HTML input element
+                console.log('referralLinkInput value after assignment:', referralLinkInput.value); // Debugging: Log the value *after* assignment
+            } else {
+                referralCodeDisplay.textContent = 'N/A';
+                referralLinkInput.value = ''; // Ensure the input is cleared if no user is logged in
+                console.log('No current user, referral fields cleared.'); // Debugging: Indicate no user
             }
+            console.log('-----------------------------'); // Debugging: End section
         }
 
         function calculateTotalEarnings() {
@@ -1152,10 +1167,14 @@
         }
 
         function copyReferralLink() {
-            referralLinkInput.select();
-            referralLinkInput.setSelectionRange(0, 99999); // For mobile devices
-            document.execCommand('copy');
-            alert('Referral link copied to clipboard!');
+            if (referralLinkInput && referralLinkInput.value) { // Ensure element exists and has a value
+                referralLinkInput.select();
+                referralLinkInput.setSelectionRange(0, 99999); // For mobile devices
+                document.execCommand('copy');
+                alert('Referral link copied to clipboard!');
+            } else {
+                alert('No referral link to copy. Please log in.');
+            }
         }
 
 
