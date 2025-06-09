@@ -121,6 +121,63 @@ app.post('/api/register', async (req, res) => {
         res.status(500).json({ message: 'Internal server error during registration.', error: error.message });
     }
 });
+// User Login Endpoint
+app.post('/api/login', async (req, res) => {
+    const { email, password } = req.body; // Expect email and password from the frontend
+
+    // Basic validation
+    if (!email || !password) {
+        return res.status(400).json({ message: 'Email and password are required.' });
+    }
+
+    try {
+        const usersRef = db.collection('users');
+
+        // 1. Find user by email in Firestore
+        const snapshot = await usersRef.where('email', '==', email).limit(1).get(); // Limit to 1 result
+        if (snapshot.empty) {
+            // User not found
+            return res.status(401).json({ message: 'Invalid credentials.' });
+        }
+
+        // Get user data and document ID
+        const userDoc = snapshot.docs[0];
+        const userData = userDoc.data();
+        const userId = userDoc.id; // Get the Firestore document ID
+
+        // 2. Compare provided password with stored hashed password
+        const isMatch = await bcrypt.compare(password, userData.password);
+
+        if (!isMatch) {
+            // Passwords do not match
+            return res.status(401).json({ message: 'Invalid credentials.' });
+        }
+
+        // 3. Login successful: Return non-sensitive user data
+        // For a real application, you would typically generate and return a JWT (JSON Web Token) here.
+        // For now, we'll return essential user details.
+        res.status(200).json({
+            message: 'Login successful!',
+            // Return only necessary, non-sensitive data
+            user: {
+                id: userId, // The Firestore document ID
+                username: userData.username,
+                email: userData.email,
+                phone: userData.phone,
+                balance: userData.balance || 0,
+                investments: userData.investments || [],
+                depositHistory: userData.depositHistory || [],
+                withdrawHistory: userData.withdrawHistory || [],
+                referralCode: userData.referralCode || null,
+                referredBy: userData.referredBy || null
+            }
+        });
+
+    } catch (error) {
+        console.error('Error during user login:', error);
+        res.status(500).json({ message: 'Internal server error during login.', error: error.message });
+    }
+});
 
 // Helper function: Generates a simple, unique referral code
 // This is a basic implementation; for production, consider a more robust unique ID generator.
