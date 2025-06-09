@@ -178,7 +178,58 @@ app.post('/api/login', async (req, res) => {
         res.status(500).json({ message: 'Internal server error during login.', error: error.message });
     }
 });
+// Deposit Endpoint
+app.post('/api/deposit', async (req, res) => {
+    const { userId, amount, method } = req.body; // Expect userId, amount, method from frontend
 
+    // Basic validation
+    if (!userId || typeof amount !== 'number' || amount <= 0 || !method) {
+        return res.status(400).json({ message: 'Invalid deposit data provided.' });
+    }
+
+    try {
+        const userRef = db.collection('users').doc(userId);
+        const userDoc = await userRef.get();
+
+        if (!userDoc.exists) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+
+        const userData = userDoc.data();
+        let currentBalance = userData.balance || 0;
+        let depositHistory = userData.depositHistory || [];
+
+        // Update balance
+        currentBalance += amount;
+
+        // Create a new deposit record
+        const newDeposit = {
+            date: new Date().toISOString(), // Use ISO string for consistent date format
+            amount: amount,
+            method: method,
+            status: 'Completed' // For simulation, assume instant completion
+        };
+
+        // Add to deposit history
+        depositHistory.push(newDeposit);
+
+        // Update user document in Firestore
+        await userRef.update({
+            balance: currentBalance,
+            depositHistory: depositHistory
+        });
+
+        res.status(200).json({
+            message: 'Deposit successful!',
+            newBalance: currentBalance,
+            depositRecord: newDeposit
+        });
+
+    } catch (error) {
+        console.error('Error during deposit:', error);
+        res.status(500).json({ message: 'Internal server error during deposit.', error: error.message });
+    }
+});
 // Helper function: Generates a simple, unique referral code
 // This is a basic implementation; for production, consider a more robust unique ID generator.
 function generateReferralCode() {
