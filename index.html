@@ -596,6 +596,1641 @@
             background-color: #4a456e;
         }
 
+        .timer-display {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        /* Investment Packages */
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .package-card {
+            background-color: var(--header-footer-bg);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .package-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .package-card h3 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .package-card p {
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .package-card .investment-range {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .package-card .daily-earning,
+        .package-card .duration {
+            color: var(--accent-color);
+            font-style: italic;
+        }
+
+        .package-card .apply-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            margin-top: 1.5rem;
+        }
+
+        .package-card .apply-btn:hover {
+            background-color: var(--button-hover);
+            transform: translateY(-2px);
+        }
+
+        .sparkle-effect {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sparkle-effect::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            opacity: 0;
+            transform: scale(0) translate(-50%, -50%);
+            transition: all 0.5s ease;
+        }
+
+        .sparkle-effect:hover::after {
+            transform: scale(100) translate(-50%, -50%);
+            opacity: 1;
+        }
+
+        /* Deposit/Withdrawal */
+        .deposit-methods,
+        .withdraw-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .method-card {
+            background-color: var(--header-footer-bg);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .method-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .method-card img {
+            max-width: 80px;
+            height: auto;
+            margin-bottom: 0.8rem;
+            border-radius: 0.5rem;
+        }
+
+        .method-card h4 {
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .method-card p {
+            font-size: 0.95rem;
+            color: var(--text-color);
+            margin-bottom: 0.8rem;
+        }
+
+        .method-card .deposit-range,
+        .method-card .withdraw-range {
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .deposit-history,
+        .withdraw-history {
+            background-color: var(--header-footer-bg);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            margin-top: 2rem;
+            color: var(--text-color);
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .history-table th,
+        .history-table td {
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        .history-table th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        .history-table tr:nth-child(even) {
+            background-color: #3f3e5e;
+        }
+
+        .history-table tr:hover {
+            background-color: #4a456e;
+        }
+
+        .timer-display {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        /* Investment Packages */
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .package-card {
+            background-color: var(--header-footer-bg);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .package-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .package-card h3 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .package-card p {
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .package-card .investment-range {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .package-card .daily-earning,
+        .package-card .duration {
+            color: var(--accent-color);
+            font-style: italic;
+        }
+
+        .package-card .apply-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            margin-top: 1.5rem;
+        }
+
+        .package-card .apply-btn:hover {
+            background-color: var(--button-hover);
+            transform: translateY(-2px);
+        }
+
+        .sparkle-effect {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sparkle-effect::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            opacity: 0;
+            transform: scale(0) translate(-50%, -50%);
+            transition: all 0.5s ease;
+        }
+
+        .sparkle-effect:hover::after {
+            transform: scale(100) translate(-50%, -50%);
+            opacity: 1;
+        }
+
+        /* Deposit/Withdrawal */
+        .deposit-methods,
+        .withdraw-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .method-card {
+            background-color: var(--header-footer-bg);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .method-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .method-card img {
+            max-width: 80px;
+            height: auto;
+            margin-bottom: 0.8rem;
+            border-radius: 0.5rem;
+        }
+
+        .method-card h4 {
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .method-card p {
+            font-size: 0.95rem;
+            color: var(--text-color);
+            margin-bottom: 0.8rem;
+        }
+
+        .method-card .deposit-range,
+        .method-card .withdraw-range {
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .deposit-history,
+        .withdraw-history {
+            background-color: var(--header-footer-bg);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            margin-top: 2rem;
+            color: var(--text-color);
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .history-table th,
+        .history-table td {
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        .history-table th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        .history-table tr:nth-child(even) {
+            background-color: #3f3e5e;
+        }
+
+        .history-table tr:hover {
+            background-color: #4a456e;
+        }
+
+        .timer-display {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        /* Investment Packages */
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .package-card {
+            background-color: var(--header-footer-bg);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .package-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .package-card h3 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .package-card p {
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .package-card .investment-range {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .package-card .daily-earning,
+        .package-card .duration {
+            color: var(--accent-color);
+            font-style: italic;
+        }
+
+        .package-card .apply-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            margin-top: 1.5rem;
+        }
+
+        .package-card .apply-btn:hover {
+            background-color: var(--button-hover);
+            transform: translateY(-2px);
+        }
+
+        .sparkle-effect {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sparkle-effect::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            opacity: 0;
+            transform: scale(0) translate(-50%, -50%);
+            transition: all 0.5s ease;
+        }
+
+        .sparkle-effect:hover::after {
+            transform: scale(100) translate(-50%, -50%);
+            opacity: 1;
+        }
+
+        /* Deposit/Withdrawal */
+        .deposit-methods,
+        .withdraw-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .method-card {
+            background-color: var(--header-footer-bg);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .method-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .method-card img {
+            max-width: 80px;
+            height: auto;
+            margin-bottom: 0.8rem;
+            border-radius: 0.5rem;
+        }
+
+        .method-card h4 {
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .method-card p {
+            font-size: 0.95rem;
+            color: var(--text-color);
+            margin-bottom: 0.8rem;
+        }
+
+        .method-card .deposit-range,
+        .method-card .withdraw-range {
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .deposit-history,
+        .withdraw-history {
+            background-color: var(--header-footer-bg);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            margin-top: 2rem;
+            color: var(--text-color);
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .history-table th,
+        .history-table td {
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        .history-table th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        .history-table tr:nth-child(even) {
+            background-color: #3f3e5e;
+        }
+
+        .history-table tr:hover {
+            background-color: #4a456e;
+        }
+
+        .timer-display {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        /* Investment Packages */
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .package-card {
+            background-color: var(--header-footer-bg);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .package-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .package-card h3 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .package-card p {
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .package-card .investment-range {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .package-card .daily-earning,
+        .package-card .duration {
+            color: var(--accent-color);
+            font-style: italic;
+        }
+
+        .package-card .apply-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            margin-top: 1.5rem;
+        }
+
+        .package-card .apply-btn:hover {
+            background-color: var(--button-hover);
+            transform: translateY(-2px);
+        }
+
+        .sparkle-effect {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sparkle-effect::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            opacity: 0;
+            transform: scale(0) translate(-50%, -50%);
+            transition: all 0.5s ease;
+        }
+
+        .sparkle-effect:hover::after {
+            transform: scale(100) translate(-50%, -50%);
+            opacity: 1;
+        }
+
+        /* Deposit/Withdrawal */
+        .deposit-methods,
+        .withdraw-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .method-card {
+            background-color: var(--header-footer-bg);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .method-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .method-card img {
+            max-width: 80px;
+            height: auto;
+            margin-bottom: 0.8rem;
+            border-radius: 0.5rem;
+        }
+
+        .method-card h4 {
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .method-card p {
+            font-size: 0.95rem;
+            color: var(--text-color);
+            margin-bottom: 0.8rem;
+        }
+
+        .method-card .deposit-range,
+        .method-card .withdraw-range {
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .deposit-history,
+        .withdraw-history {
+            background-color: var(--header-footer-bg);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            margin-top: 2rem;
+            color: var(--text-color);
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .history-table th,
+        .history-table td {
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        .history-table th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        .history-table tr:nth-child(even) {
+            background-color: #3f3e5e;
+        }
+
+        .history-table tr:hover {
+            background-color: #4a456e;
+        }
+
+        .timer-display {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        /* Investment Packages */
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .package-card {
+            background-color: var(--header-footer-bg);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .package-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .package-card h3 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .package-card p {
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .package-card .investment-range {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .package-card .daily-earning,
+        .package-card .duration {
+            color: var(--accent-color);
+            font-style: italic;
+        }
+
+        .package-card .apply-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            margin-top: 1.5rem;
+        }
+
+        .package-card .apply-btn:hover {
+            background-color: var(--button-hover);
+            transform: translateY(-2px);
+        }
+
+        .sparkle-effect {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sparkle-effect::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            opacity: 0;
+            transform: scale(0) translate(-50%, -50%);
+            transition: all 0.5s ease;
+        }
+
+        .sparkle-effect:hover::after {
+            transform: scale(100) translate(-50%, -50%);
+            opacity: 1;
+        }
+
+        /* Deposit/Withdrawal */
+        .deposit-methods,
+        .withdraw-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .method-card {
+            background-color: var(--header-footer-bg);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .method-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .method-card img {
+            max-width: 80px;
+            height: auto;
+            margin-bottom: 0.8rem;
+            border-radius: 0.5rem;
+        }
+
+        .method-card h4 {
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .method-card p {
+            font-size: 0.95rem;
+            color: var(--text-color);
+            margin-bottom: 0.8rem;
+        }
+
+        .method-card .deposit-range,
+        .method-card .withdraw-range {
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .deposit-history,
+        .withdraw-history {
+            background-color: var(--header-footer-bg);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            margin-top: 2rem;
+            color: var(--text-color);
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .history-table th,
+        .history-table td {
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        .history-table th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        .history-table tr:nth-child(even) {
+            background-color: #3f3e5e;
+        }
+
+        .history-table tr:hover {
+            background-color: #4a456e;
+        }
+
+        .timer-display {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        /* Investment Packages */
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .package-card {
+            background-color: var(--header-footer-bg);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .package-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .package-card h3 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .package-card p {
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .package-card .investment-range {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .package-card .daily-earning,
+        .package-card .duration {
+            color: var(--accent-color);
+            font-style: italic;
+        }
+
+        .package-card .apply-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            margin-top: 1.5rem;
+        }
+
+        .package-card .apply-btn:hover {
+            background-color: var(--button-hover);
+            transform: translateY(-2px);
+        }
+
+        .sparkle-effect {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sparkle-effect::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            opacity: 0;
+            transform: scale(0) translate(-50%, -50%);
+            transition: all 0.5s ease;
+        }
+
+        .sparkle-effect:hover::after {
+            transform: scale(100) translate(-50%, -50%);
+            opacity: 1;
+        }
+
+        /* Deposit/Withdrawal */
+        .deposit-methods,
+        .withdraw-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .method-card {
+            background-color: var(--header-footer-bg);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .method-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .method-card img {
+            max-width: 80px;
+            height: auto;
+            margin-bottom: 0.8rem;
+            border-radius: 0.5rem;
+        }
+
+        .method-card h4 {
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .method-card p {
+            font-size: 0.95rem;
+            color: var(--text-color);
+            margin-bottom: 0.8rem;
+        }
+
+        .method-card .deposit-range,
+        .method-card .withdraw-range {
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .deposit-history,
+        .withdraw-history {
+            background-color: var(--header-footer-bg);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            margin-top: 2rem;
+            color: var(--text-color);
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .history-table th,
+        .history-table td {
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        .history-table th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        .history-table tr:nth-child(even) {
+            background-color: #3f3e5e;
+        }
+
+        .history-table tr:hover {
+            background-color: #4a456e;
+        }
+
+        .timer-display {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        /* Investment Packages */
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .package-card {
+            background-color: var(--header-footer-bg);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .package-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .package-card h3 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .package-card p {
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .package-card .investment-range {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .package-card .daily-earning,
+        .package-card .duration {
+            color: var(--accent-color);
+            font-style: italic;
+        }
+
+        .package-card .apply-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            margin-top: 1.5rem;
+        }
+
+        .package-card .apply-btn:hover {
+            background-color: var(--button-hover);
+            transform: translateY(-2px);
+        }
+
+        .sparkle-effect {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sparkle-effect::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            opacity: 0;
+            transform: scale(0) translate(-50%, -50%);
+            transition: all 0.5s ease;
+        }
+
+        .sparkle-effect:hover::after {
+            transform: scale(100) translate(-50%, -50%);
+            opacity: 1;
+        }
+
+        /* Deposit/Withdrawal */
+        .deposit-methods,
+        .withdraw-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .method-card {
+            background-color: var(--header-footer-bg);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .method-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .method-card img {
+            max-width: 80px;
+            height: auto;
+            margin-bottom: 0.8rem;
+            border-radius: 0.5rem;
+        }
+
+        .method-card h4 {
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .method-card p {
+            font-size: 0.95rem;
+            color: var(--text-color);
+            margin-bottom: 0.8rem;
+        }
+
+        .method-card .deposit-range,
+        .method-card .withdraw-range {
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .deposit-history,
+        .withdraw-history {
+            background-color: var(--header-footer-bg);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            margin-top: 2rem;
+            color: var(--text-color);
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .history-table th,
+        .history-table td {
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        .history-table th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        .history-table tr:nth-child(even) {
+            background-color: #3f3e5e;
+        }
+
+        .history-table tr:hover {
+            background-color: #4a456e;
+        }
+
+        .timer-display {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        /* Investment Packages */
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .package-card {
+            background-color: var(--header-footer-bg);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .package-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .package-card h3 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .package-card p {
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .package-card .investment-range {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .package-card .daily-earning,
+        .package-card .duration {
+            color: var(--accent-color);
+            font-style: italic;
+        }
+
+        .package-card .apply-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            margin-top: 1.5rem;
+        }
+
+        .package-card .apply-btn:hover {
+            background-color: var(--button-hover);
+            transform: translateY(-2px);
+        }
+
+        .sparkle-effect {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sparkle-effect::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            opacity: 0;
+            transform: scale(0) translate(-50%, -50%);
+            transition: all 0.5s ease;
+        }
+
+        .sparkle-effect:hover::after {
+            transform: scale(100) translate(-50%, -50%);
+            opacity: 1;
+        }
+
+        /* Referral Link Input Styling - Moved to a dedicated class for robustness */
+        .referral-link-input {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin: 15px 0;
+            background-color: #FFFFCC; /* Light Yellow */
+            color: #000000; /* Black text */
+            border: 3px solid #FF4500; /* Orange-red border */
+            border-radius: 10px;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+            opacity: 1;
+            font-weight: bold; /* Make the text bold */
+        }
+
+
+        /* Deposit/Withdrawal */
+        .deposit-methods,
+        .withdraw-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .method-card {
+            background-color: var(--header-footer-bg);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .method-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .method-card img {
+            max-width: 80px;
+            height: auto;
+            margin-bottom: 0.8rem;
+            border-radius: 0.5rem;
+        }
+
+        .method-card h4 {
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .method-card p {
+            font-size: 0.95rem;
+            color: var(--text-color);
+            margin-bottom: 0.8rem;
+        }
+
+        .method-card .deposit-range,
+        .method-card .withdraw-range {
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .deposit-history,
+        .withdraw-history {
+            background-color: var(--header-footer-bg);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            margin-top: 2rem;
+            color: var(--text-color);
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .history-table th,
+        .history-table td {
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        .history-table th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        .history-table tr:nth-child(even) {
+            background-color: #3f3e5e;
+        }
+
+        .history-table tr:hover {
+            background-color: #4a456e;
+        }
+
+        .timer-display {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        /* Investment Packages */
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .package-card {
+            background-color: var(--header-footer-bg);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .package-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .package-card h3 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .package-card p {
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .package-card .investment-range {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .package-card .daily-earning,
+        .package-card .duration {
+            color: var(--accent-color);
+            font-style: italic;
+        }
+
+        .package-card .apply-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            margin-top: 1.5rem;
+        }
+
+        .package-card .apply-btn:hover {
+            background-color: var(--button-hover);
+            transform: translateY(-2px);
+        }
+
+        .sparkle-effect {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sparkle-effect::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            opacity: 0;
+            transform: scale(0) translate(-50%, -50%);
+            transition: all 0.5s ease;
+        }
+
+        .sparkle-effect:hover::after {
+            transform: scale(100) translate(-50%, -50%);
+            opacity: 1;
+        }
 
         /* Footer */
         footer {
@@ -855,8 +2490,8 @@
                 <h3>Referral Program</h3>
                 <p>Share your unique referral code to earn bonuses!</p>
                 <p>Your Referral Code: <strong id="referralCodeDisplay">N/A</strong></p>
-                <!-- This input field is where the full referral link should appear -->
-                <input type="text" id="referralLink" readonly style="display: block; width: 100%; padding: 15px; margin: 15px 0; background-color: #FFFF00; color: #000000; border: 3px solid #FF0000; border-radius: 10px; font-size: 1.2rem; box-shadow: 0 4px 8px rgba(0,0,0,0.5); opacity: 1;">
+                <!-- This input field is where the full referral link should appear, now with a class -->
+                <input type="text" id="referralLink" readonly class="referral-link-input">
                 <button onclick="copyReferralLink()" style="margin-top: 10px; padding: 10px 15px; background-color: var(--accent-color); color: white; border: none; border-radius: 5px; cursor: pointer;">Copy Link</button>
             </div>
         </section>
@@ -1143,7 +2778,10 @@
             if (currentUser) {
                 console.log('currentUser.referralCode:', currentUser.referralCode); // Debugging: Log the referral code itself
                 referralCodeDisplay.textContent = currentUser.referralCode || 'N/A';
-                const generatedReferralLink = `${window.location.origin}${window.location.pathname}?ref=${currentUser.referralCode || ''}`; // Correctly generate the URL
+                // Use window.location.href to get the full current URL including any existing query parameters
+                // This ensures we always get the correct base URL for GitHub Pages
+                const baseUrl = window.location.origin + window.location.pathname;
+                const generatedReferralLink = `${baseUrl}?ref=${currentUser.referralCode || ''}`;
                 referralLinkInput.value = generatedReferralLink; // Assign to the input field
                 console.log('Generated Referral Link:', generatedReferralLink); // Debugging: Log the full generated link
                 console.log('referralLinkInput element:', referralLinkInput); // Debugging: Log the HTML input element
@@ -1516,12 +3154,15 @@
             }
             depositHistory.forEach(dep => {
                 const row = depositHistoryTableBody.insertRow();
-                // Correct template literal for row.innerHTML
+                // Ensure date is formatted for display and amount is formatted
+                const displayDate = dep.date ? new Date(dep.date).toLocaleString() : 'N/A';
+                const displayAmount = typeof dep.amount === 'number' ? `UGX ${dep.amount.toLocaleString()}` : 'N/A';
+
                 row.innerHTML = `
-                    <td>${dep.date}</td>
-                    <td>UGX ${dep.amount.toLocaleString()}</td>
-                    <td>${dep.method}</td>
-                    <td>${dep.status}</td>
+                    <td>${displayDate}</td>
+                    <td>${displayAmount}</td>
+                    <td>${dep.method || 'N/A'}</td>
+                    <td>${dep.status || 'N/A'}</td>
                 `;
             });
         }
@@ -1551,7 +3192,7 @@
 
             if (confirm(`Confirm withdrawal of UGX ${amount.toLocaleString()} to ${account} via ${method}?`)) {
                 const withdrawal = {
-                    date: new Date().toLocaleString(),
+                    date: new Date().toISOString(), // Use ISO string for consistency with deposit
                     amount: amount,
                     method: method,
                     account: account,
@@ -1578,12 +3219,15 @@
             }
             withdrawHistory.forEach(wd => {
                 const row = withdrawHistoryTableBody.insertRow();
-                // Correct template literal for row.innerHTML
+                // Ensure date is formatted for display and amount is formatted
+                const displayDate = wd.date ? new Date(wd.date).toLocaleString() : 'N/A';
+                const displayAmount = typeof wd.amount === 'number' ? `UGX ${wd.amount.toLocaleString()}` : 'N/A';
+                
                 row.innerHTML = `
-                    <td>${wd.date}</td>
-                    <td>UGX ${wd.amount.toLocaleString()}</td>
-                    <td>${wd.method}</td>
-                    <td>${wd.status}</td>
+                    <td>${displayDate}</td>
+                    <td>${displayAmount}</td>
+                    <td>${wd.method || 'N/A'}</td>
+                    <td>${wd.status || 'N/A'}</td>
                 `;
             });
         }
