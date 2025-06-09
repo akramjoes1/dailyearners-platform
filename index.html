@@ -1436,83 +1436,77 @@
             }, 1000);
         }
 
-        <script>
-    // ... (Your existing JavaScript code, including API_BASE_URL) ...
+        // --- Deposit Functionality (NOW INTEGRATED WITH BACKEND) ---
+        async function promptDepositAmount(method) { // Make the function async
+            if (!currentUser) {
+                alert('Please log in to deposit funds.');
+                showPage('login-page');
+                return;
+            }
 
-    // --- Deposit Functionality (NOW INTEGRATED WITH BACKEND) ---
-    async function promptDepositAmount(method) { // Make the function async
-        if (!currentUser) {
-            alert('Please log in to deposit funds.');
-            showPage('login-page');
-            return;
-        }
+            // Get userId from currentUser
+            const userId = currentUser.id;
+            if (!userId) {
+                alert('User ID not found. Please log in again.');
+                console.error('Error: currentUser.id is missing.');
+                return;
+            }
 
-        // Get userId from currentUser
-        const userId = currentUser.id;
-        if (!userId) {
-            alert('User ID not found. Please log in again.');
-            console.error('Error: currentUser.id is missing.');
-            return;
-        }
+            let amountInput = prompt(`Enter amount to deposit via ${method} (UGX ${MIN_DEPOSIT.toLocaleString()} - UGX ${MAX_DEPOSIT.toLocaleString()}):`);
+            let amount = parseFloat(amountInput);
 
-        let amountInput = prompt(`Enter amount to deposit via ${method} (UGX ${MIN_DEPOSIT.toLocaleString()} - UGX ${MAX_DEPOSIT.toLocaleString()}):`);
-        let amount = parseFloat(amountInput);
+            if (isNaN(amount) || amount < MIN_DEPOSIT || amount > MAX_DEPOSIT) {
+                alert(`Invalid amount. Please enter an amount between UGX ${MIN_DEPOSIT.toLocaleString()} and UGX ${MAX_DEPOSIT.toLocaleString()}.`);
+                return;
+            }
 
-        if (isNaN(amount) || amount < MIN_DEPOSIT || amount > MAX_DEPOSIT) {
-            alert(`Invalid amount. Please enter an amount between UGX ${MIN_DEPOSIT.toLocaleString()} and UGX ${MAX_DEPOSIT.toLocaleString()}.`);
-            return;
-        }
+            if (confirm(`Confirm deposit of UGX ${amount.toLocaleString()} via ${method}?`)) {
+                try {
+                    console.log(`Sending deposit request for userId: ${userId}, amount: ${amount}, method: ${method}`);
+                    const response = await fetch(`${API_BASE_URL}/api/deposit`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ userId, amount, method })
+                    });
 
-        if (confirm(`Confirm deposit of UGX ${amount.toLocaleString()} via ${method}?`)) {
-            try {
-                console.log(`Sending deposit request for userId: ${userId}, amount: ${amount}, method: ${method}`);
-                const response = await fetch(`${API_BASE_URL}/api/deposit`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ userId, amount, method })
-                });
+                    const data = await response.json();
 
-                const data = await response.json();
+                    if (response.ok) {
+                        // Backend successfully processed the deposit
+                        alert(data.message || 'Deposit successful!');
+                        console.log('Deposit success:', data);
 
-                if (response.ok) {
-                    // Backend successfully processed the deposit
-                    alert(data.message || 'Deposit successful!');
-                    console.log('Deposit success:', data);
+                        // Update local state with new balance and history from backend response
+                        currentUser.balance = data.newBalance;
+                        // Assuming backend sends back the new deposit record within depositRecord
+                        // We push it to the local history, or if backend sends entire new history, replace it.
+                        if (!currentUser.depositHistory) { // Initialize if null/undefined
+                           currentUser.depositHistory = [];
+                        }
+                        currentUser.depositHistory.push(data.depositRecord);
 
-                    // Update local state with new balance and history from backend response
-                    currentUser.balance = data.newBalance;
-                    // Assuming backend sends back the new deposit record within depositRecord
-                    // We push it to the local history, or if backend sends entire new history, replace it.
-                    // For simplicity, we'll append the record returned by backend.
-                    if (!currentUser.depositHistory) { // Initialize if null/undefined
-                       currentUser.depositHistory = [];
+                        sessionStorage.setItem('currentUser', JSON.stringify(currentUser)); // Save updated user data
+                        
+                        // Update UI
+                        accountBalance = currentUser.balance; // Sync local variable
+                        depositHistory = currentUser.depositHistory; // Sync local variable
+                        updateBalanceDisplay();
+                        renderDepositHistory();
+
+                    } else {
+                        // Backend returned an error
+                        alert('Deposit failed: ' + (data.message || 'An unknown error occurred.'));
+                        console.error('Deposit error response:', data);
                     }
-                    currentUser.depositHistory.push(data.depositRecord);
-
-                    sessionStorage.setItem('currentUser', JSON.stringify(currentUser)); // Save updated user data
-
-                    // Update UI
-                    accountBalance = currentUser.balance; // Sync local variable
-                    depositHistory = currentUser.depositHistory; // Sync local variable
-                    updateBalanceDisplay();
-                    renderDepositHistory();
-
-                } else {
-                    // Backend returned an error
-                    alert('Deposit failed: ' + (data.message || 'An unknown error occurred.'));
-                    console.error('Deposit error response:', data);
+                } catch (error) {
+                    // Network error or issue with fetch operation
+                    console.error('Error during frontend deposit fetch:', error);
+                    alert('An error occurred during deposit. Please try again later.');
                 }
-            } catch (error) {
-                // Network error or issue with fetch operation
-                console.error('Error during frontend deposit fetch:', error);
-                alert('An error occurred during deposit. Please try again later.');
             }
         }
-    }
-    // ... (rest of your JavaScript code, including renderDepositHistory) ...
-</script>
 
         function renderDepositHistory() {
             depositHistoryTableBody.innerHTML = '';
