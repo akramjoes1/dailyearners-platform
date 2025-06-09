@@ -1167,7 +1167,8 @@
                 return;
             }
 
-            packagesContainer.innerHTML = '<h3 style="color: var(--primary-color); text-align: center;">Loading Investment Packages...</h3><p style="color: var(--text-color); text-align: center;">Please ensure your Node.js backend server is running and accessible.</p>';
+            // Correct template literal for innerHTML
+            packagesContainer.innerHTML = `<h3 style="color: var(--primary-color); text-align: center;">Loading Investment Packages...</h3><p style="color: var(--text-color); text-align: center;">Please ensure your Node.js backend server is running and accessible.</p>`;
 
             try {
                 const response = await fetch(`${API_BASE_URL}/api/packages`);
@@ -1181,7 +1182,7 @@
                 packagesContainer.innerHTML = ''; // Clear loading message
 
                 if (data.length === 0) {
-                    packagesContainer.innerHTML = '<p style="color: var(--secondary-color); text-align: center;">No investment packages available at the moment.</p>';
+                    packagesContainer.innerHTML = `<p style="color: var(--secondary-color); text-align: center;">No investment packages available at the moment.</p>`;
                     return;
                 }
 
@@ -1200,6 +1201,7 @@
                     packageCard.dataset.name = packageName;
                     packageCard.dataset.duration = durationDays;
 
+                    // Correct template literal for packageCard.innerHTML
                     packageCard.innerHTML = `
                         <h3>${packageName}</h3>
                         <p class="investment-range">UGX ${minInvestment.toLocaleString()} ${maxInvestment ? `- UGX ${maxInvestment.toLocaleString()}` : ''}</p>
@@ -1325,11 +1327,12 @@
         function renderInvestments() {
             myInvestmentsTableBody.innerHTML = '';
             if (investments.length === 0) {
-                myInvestmentsTableBody.innerHTML = '<tr><td colspan="8" class="text-center">No active investments. Start investing today!</td></tr>';
+                myInvestmentsTableBody.innerHTML = `<tr><td colspan="8" class="text-center">No active investments. Start investing today!</td></tr>`;
                 return;
             }
             investments.forEach(inv => {
                 const row = myInvestmentsTableBody.insertRow();
+                // Correct template literal for row.innerHTML
                 row.innerHTML = `
                     <td>${inv.packageName}</td>
                     <td>UGX ${inv.investedAmount.toLocaleString()}</td>
@@ -1451,11 +1454,12 @@
         function renderDepositHistory() {
             depositHistoryTableBody.innerHTML = '';
             if (depositHistory.length === 0) {
-                depositHistoryTableBody.innerHTML = '<tr><td colspan="4" class="text-center">No deposit history.</td></tr>';
+                depositHistoryTableBody.innerHTML = `<tr><td colspan="4" class="text-center">No deposit history.</td></tr>`;
                 return;
             }
             depositHistory.forEach(dep => {
                 const row = depositHistoryTableBody.insertRow();
+                // Correct template literal for row.innerHTML
                 row.innerHTML = `
                     <td>${dep.date}</td>
                     <td>UGX ${dep.amount.toLocaleString()}</td>
@@ -1512,11 +1516,12 @@
         function renderWithdrawHistory() {
             withdrawHistoryTableBody.innerHTML = '';
             if (withdrawHistory.length === 0) {
-                withdrawHistoryTableBody.innerHTML = '<tr><td colspan="4" class="text-center">No withdrawal history.</td></tr>';
+                withdrawHistoryTableBody.innerHTML = `<tr><td colspan="4" class="text-center">No withdrawal history.</td></tr>`;
                 return;
             }
             withdrawHistory.forEach(wd => {
                 const row = withdrawHistoryTableBody.insertRow();
+                // Correct template literal for row.innerHTML
                 row.innerHTML = `
                     <td>${wd.date}</td>
                     <td>UGX ${wd.amount.toLocaleString()}</td>
